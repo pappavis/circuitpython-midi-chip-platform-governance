@@ -1,0 +1,41 @@
+# Bronregister
+
+<!--
+Bestand: source_register_v0.1.0.md
+Versienommer: 0.1.0
+Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
+Sprint: Sprint 0
+Epic: MCP-EPIC-001 Platform Foundation
+User-Story: MCP-US-001 Device And Source Baseline Inventory
+Actienr: MCP-ACT-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001
+-->
+
+## Primêre tegniese bronne
+
+| Bron | Gebruik | Vertroue/beperking |
+|---|---|---|
+| [CircuitPython `usb_midi`](https://docs.circuitpython.org/en/latest/shared-bindings/usb_midi/) | USB-MIDI enable/disable, poorte, name en ESP32-S2 endpointwaarskuwing | Primêre amptelike API; firmwareweergawe moet tydens implementering bevestig word |
+| [CircuitPython `audiobusio.I2SOut`](https://docs.circuitpython.org/en/stable/shared-bindings/audiobusio/) | I2S-penkontrak en sample-uitvoer | Primêre amptelike API; beskikbaarheid is bordbou-afhanklik |
+| [CircuitPython `synthio`](https://docs.circuitpython.org/en/latest/shared-bindings/synthio/) | Eksperimentele synth, panning, envelope en bend-spike | Primêre API, maar eksplisiet eksperimenteel; nie ons enigste kernbasis nie |
+| [Adafruit MIDI Library](https://docs.circuitpython.org/projects/midi/en/latest/) | Note On/Off, CC, pitch bend, clock, start/stop/continue | Amptelike biblioteek; bundelweergawe moet vasgepen word |
+| [Adafruit MIDI API](https://docs.circuitpython.org/projects/midi/en/latest/api.html) | 14-bit bend, 7-bit CC en 24 PPQN timing clock | Primêre boodskapsemantiek |
+| [Adafruit HTTP Server](https://docs.circuitpython.org/projects/httpserver/en/stable/) | Plaaslike HTTP, routing, WebSocket en SSE | Geheue-/sokbeperkings vereis eenkliënt-MVP |
+| [HTTP server polling examples](https://docs.circuitpython.org/projects/httpserver/en/stable/examples.html) | Koöperatiewe polling en asyncio-opsies | Voorbeeld is nie ’n real-time klankwaarborg nie |
+| [CircuitPython `settings.toml`](https://learn.adafruit.com/networking-in-circuitpython/network-settings) | Moderne private netwerkconfig | Geen geheime in Git nie |
+| [Raspberry Pi OS documentation](https://www.raspberrypi.com/documentation/computers/os.html) | Skeiding van Linux/Python-teikens van mikrobeheerderfirmware | Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie |
+
+## Plaaslike en projekbronne
+
+| Bron | Gebruik | Publikasiebeleid |
+|---|---|---|
+| `pappavis/python-d1-synth` | Getoetste MIDI-, voice-, pitch-, CC-, ADSR- en routingkontrakte | Verwys na openbare repo; port gedrag, nie desktop-backends nie |
+| `pappavis/midi-chip-platform` | Domeindokumentasie, governance en gearchiveerde modulêre grense | Hergebruik slegs ná onafhanklike toets/portering |
+| Verwysingsbord se huidige CIRCUITPY-volume | PWM/SN76489-prototipe en werklike biblioteekinventaris | Privaat rugsteun; geen geheime, UID of volledige kopie in Git nie |
+| Gebruiker se Rigol DHO804 en meettoerusting | Frekwensie, duty cycle, jitter en stereokanaalbewys | Resultate word as HIL-verslag gepubliseer, nie persoonlike toesteldata nie |
+| YouTube-verwysing oor ESP32/I2S | Oriëntering en praktiese demonstrasie | Sekondêre bron; argitektuurbesluite steun op amptelike API en eie metings |
+
+## Bronreël
+
+Dokumentasie of video bewys nie dat ’n spesifieke bordbou ’n module bevat of dat real-time klank stabiel is nie. Elke kritieke eis kry ’n runtime-vermoënscheck en, waar toepaslik, ’n ossilloskoop-/luistertoets.
+
