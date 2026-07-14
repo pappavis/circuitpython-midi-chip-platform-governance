@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
-Actienr: MCP-ACT-MTM-AMEND-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+User-Story: SCOPE-AMENDMENT-002
+Actienr: MCP-ACT-SCOPE-AMEND-BACKLOG-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 -->
 
 ## Statuslegende
@@ -38,6 +38,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 |---|---|---|---|---|
 | MCP-US-006 | Portable NoteEvent And ControlEvent Model | MVP | US-002 | Note, CC, bend en klokboodskappe het platform-onafhanklike klasse |
 | MCP-US-007 | USB MIDI Receive Loop | MVP | US-003, US-006 | Enige klas-kompatibele bron kan via 'n rekenaar/DAW of eksterne USB-host Note On/Off stuur sonder toestelnaamkonstante |
+| MCP-US-062 | BLE MIDI Transport And Capability Gate | MVP (Must) | US-006, US-007, US-052 | ’n BLE-geskikte bord adverteer en ontvang Note/CC/bend via dieselfde eventmodel; ESP32-S2 rapporteer nie-ondersteun sonder USB-regressie |
 | MCP-US-008 | MIDI Channel Router | MVP | US-007 | Kanaal 1-16 word konfigureerbaar na ’n kerninstansie gerouteer |
 | MCP-US-009 | Velocity And Note-Off Semantics | MVP | US-007 | Velocity nul sluit note; geen hangende stem ná All Notes Off nie |
 | MCP-US-010 | Pitch Bend And CC1 Modulation | MVP | US-007 | Bend en vibrato word hoorbaar en diagnosties gemeet |
@@ -53,9 +54,10 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-014 | AudioOutput Port And Null Backend | MVP | US-002 | Kernlogika kan sonder fisiese klank host-getoets word |
 | MCP-US-016 | MAX98357 Mono I2S Audible Diagnostic | MVP | US-004, US-014 | Een geprofileerde MAX98357 speel 'n veilige hoorbare toetssein; penne, RAM, latensie en dropout is gemeet |
 | MCP-US-015 | PWM Diagnostic Fallback | MVP | US-004, US-014 | Gekose debugpenne lewer 'n meetbare fallback-sein wanneer I2S nie beskikbaar is nie |
-| MCP-US-017 | SN76489-Lite Three-Voice Core | MVP | US-006, US-014 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |
+| MCP-US-063 | Portable D1 Baseline Synth Core | MVP | US-006, US-014, US-016 | Nuut-geporteerde sine/saw/square D1-gedrag speel via AudioOutput met Note/CC/bend; geen desktop-backend of produksierepo-wysiging nie |
+| MCP-US-017 | SN76489-Lite Three-Voice Core | MVP | US-063 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |
 | MCP-US-018 | Voice Allocation And Stealing | MVP | US-017 | Vierde noot volg ’n toetsbare steal-policy sonder vasloop |
-| MCP-US-020 | Optional G-C-D Startup Test | MVP | US-016, US-017 | Opsionele sestiendenootreeks bewys die mono-I2S-klankpad by start |
+| MCP-US-020 | Optional G-C-D Startup Test | MVP | US-016, US-063 | Opsionele sestiendenootreeks bewys die mono-I2S-klankpad by start |
 | MCP-US-019 | Per-Voice Left Right Stereo Routing | MVP | US-016, US-017, US-021 | Elke stem kan links, regs of stereo gemonitor word |
 | MCP-US-021 | Stereo I2S Expansion Decision | MVP | US-015, US-016 | HIL kies twee MAX98357-modules of 'n stereo-I2S-backend; PWM bly fallback |
 
@@ -114,7 +116,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 |---|---|---|---|---|
 | MCP-US-050 | Host Simulator And Contract Tests | MVP | US-002, US-006 | Kern/MIDI/clock-toetse loop op macOS, Windows en Linux sonder bord |
 | MCP-US-051 | Hardware-In-The-Loop Test Runner | In Progress/MVP | US-003, US-015 | Connection, deploy en execution proof plus USB-MIDI en klankmeetstappe lewer 'n geredigeerde naspeurbare verslag |
-| MCP-US-052 | Cross-Board Capability Profiles | Later | US-004 | ’n tweede CircuitPython-mikrobeheerder werk via ’n profiel |
+| MCP-US-052 | Cross-Board Capability Profiles | MVP | US-004 | ’n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via ’n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | MVP | US-003, US-007 | Toestel verskyn en ontvang note op ’n skoon Windows-rekenaar |
 | MCP-US-055 | macOS Logic Pro Acceptance | MVP | US-003, US-007 | Logic kies die synth as External MIDI destination en stuur note/clock; fisiese pedaaluitvoer bly die klankpad |

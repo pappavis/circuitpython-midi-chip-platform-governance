@@ -2,9 +2,13 @@
 
 > ’n MIDI-beheerde, multi-kern retro-sintetiseerdermodule in pedaalvorm, met USB-MIDI, stereo-klankuitvoer, plaaslike webbeheer en uitbreibare skyfie-emulasie.
 
+![CircuitPython MIDI Chip Platform-argitektuur in 1985-retrostyl](assets/images/circuitpython-midi-chip-platform-architecture-v0.1.0.png)
+
+Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een draagbare eventmodel genormaliseer; die router kies ’n kerninstansie; die klankpoort kies MAX98357-I2S, PWM-diagnose of ’n latere stereo-backend. Die kernpad is **D1-basiskern → SN76489 → 6581 SID → OPL2 → OPL3**.
+
 ## Projekstatus
 
-Die projek is in **Sprint 1: platformfondasie**. MCP-US-003 se minimale, herstelbare CircuitPython USB-MIDI-profiel is op die fisiese ESP32-S2 bewys. MCP-US-051 bou nou die herhaalbare HIL-runner; daar is nog geen hoorbare chip-emulasie nie. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback.
+Die projek is in **Sprint 1: platformfondasie**. MCP-US-003 se minimale, herstelbare CircuitPython USB-MIDI-profiel is op die fisiese ESP32-S2 bewys. MCP-US-051 bou nou die herhaalbare HIL-runner; daar is nog geen synth core in implementering en nog geen hoorbare chip-emulasie nie. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback. Daarna volg die draagbare D1-basiskern as eerste musikale kern.
 
 ## Begin hier
 
@@ -19,7 +23,7 @@ python -m pytest
 
 ## MVP in een sin
 
-Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker via klawerbord of MIDI-kitaar note, akkoorde, bends en slides kan stuur, ’n SN76489-agtige driestem-kern kan speel, eers mono MAX98357-klank en later stereo-uitvoer kan gebruik, en kernparameters op ’n eenvoudige plaaslike webblad kan verander.
+Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker via klawerbord of MIDI-kitaar note, akkoorde, bends en slides kan stuur, eers ’n draagbare D1-basiskern en daarna ’n SN76489-agtige driestem-kern kan speel, mono MAX98357-klank en later stereo-uitvoer kan gebruik, en kernparameters op ’n eenvoudige plaaslike webblad kan verander. BLE-MIDI word op ’n tweede BLE-geskikte CircuitPython-bord aanvaar omdat die ESP32-S2 self nie native BLE ondersteun nie.
 
 ## Hoekom ’n skoon repository?
 
@@ -44,6 +48,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)
+- [BLE-MIDI en synth-core-prioriteit](docs/ble_midi_core_priority_amendment_v0.1.0.md)
 - [Device Connection Proof](docs/device_connection_proof_v0.1.0.md)
 
 ## Belangrike veiligheidsreëls
@@ -61,7 +66,8 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - Klein stories met rooi/groen-toetse en eksplisiete hardeware-aanvaarding.
 - Bordvermoëns word ontdek; bordname, MIDI-toestelle en penne word nie as universele konstantes aanvaar nie.
 - MIDI, kernlogika, klankuitvoer en webbeheer word deur duidelike poorte geskei.
-- Die klankenjin bly vervangbaar: SN76489 eerste; SID, OPL2/OPL3 en ander kerne later.
+- Die klankenjin bly vervangbaar: draagbare D1-basiskern eerste, SN76489 tweede, 6581 SID derde en OPL2/OPL3 daarna.
+- BLE-MIDI is ’n MVP-vereiste, maar word capability-gated: die ESP32-S2 rapporteer dit veilig as nie-ondersteun; ’n BLE-geskikte tweede bord lewer die fisiese aanvaardingsbewys.
 - Die span volg backlogvolgorde; side quests word georden en nie stilweg geimplementeer nie.
 - Lessons learned word na elke drie of vier voltooide stories en by epic-/releasegrense opgedateer.
 - `python-d1-synth` is produksiekode en word uitsluitlik as 'n leesalleen-verwysing gebruik.

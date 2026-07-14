@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
-Actienr: MCP-ACT-MTM-AMEND-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+User-Story: SCOPE-AMENDMENT-002
+Actienr: MCP-ACT-SCOPE-AMEND-SRC-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 -->
 
 ## Primêre tegniese bronne
@@ -24,6 +24,10 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 | [CircuitPython `synthio`](https://docs.circuitpython.org/en/latest/shared-bindings/synthio/) | Eksperimentele synth, panning, envelope en bend-spike | Primêre API, maar eksplisiet eksperimenteel; nie ons enigste kernbasis nie |
 | [Adafruit MIDI Library](https://docs.circuitpython.org/projects/midi/en/latest/) | Note On/Off, CC, pitch bend, clock, start/stop/continue | Amptelike biblioteek; bundelweergawe moet vasgepen word |
 | [Adafruit MIDI API](https://docs.circuitpython.org/projects/midi/en/latest/api.html) | 14-bit bend, 7-bit CC en 24 PPQN timing clock | Primêre boodskapsemantiek |
+| [CircuitPython `_bleio`](https://docs.circuitpython.org/en/latest/shared-bindings/_bleio/) | Native BLE capability discovery en eksplisiete ESP32-S2-uitsondering | Primêre amptelike API; gebruik hoërvlak `adafruit_ble` waar beskikbaar |
+| [Adafruit BLE MIDI](https://docs.circuitpython.org/projects/ble_midi/en/latest/) | BLE MIDI service en biblioteekafhanklikhede | Amptelike biblioteek; positiewe HIL vereis ’n BLE-geskikte bord |
+| [Adafruit BLE MIDI API](https://docs.circuitpython.org/projects/ble_midi/en/stable/api.html) | `MIDIService` as PortIn/PortOut-agtige transport met MIDI timestamps | Ondersteun die gemeenskaplike MidiInputPort-ontwerp; nie ’n S2-vermoënsbewys nie |
+| [Espressif ESP32-S2 datasheet](https://documentation.espressif.com/esp32-s2_datasheet_en.html) | S2-radio-, Wi-Fi-, USB-, I2S- en geheuevermoëns | Primêre silikonbron; BLE-afwesigheid word ook eksplisiet deur CircuitPython `_bleio` bevestig |
 | [Adafruit HTTP Server](https://docs.circuitpython.org/projects/httpserver/en/stable/) | Plaaslike HTTP, routing, WebSocket en SSE | Geheue-/sokbeperkings vereis eenkliënt-MVP |
 | [HTTP server polling examples](https://docs.circuitpython.org/projects/httpserver/en/stable/examples.html) | Koöperatiewe polling en asyncio-opsies | Voorbeeld is nie ’n real-time klankwaarborg nie |
 | [CircuitPython `settings.toml`](https://learn.adafruit.com/networking-in-circuitpython/network-settings) | Moderne private netwerkconfig | Geen geheime in Git nie |

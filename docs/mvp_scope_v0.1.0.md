@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Definieer die eerste toetsbare CircuitPython MIDI Chip Platform MVP.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
-Actienr: MCP-ACT-MTM-AMEND-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+User-Story: SCOPE-AMENDMENT-002
+Actienr: MCP-ACT-SCOPE-AMEND-DOC-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 -->
 
 ## Produkdefinisie
@@ -24,7 +24,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 
 1. Die toestel begin betroubaar en bied ’n herkenbare USB-MIDI-poort aan.
-2. MIDI Note On/Off beheer ’n SN76489-agtige driestem-kern.
+2. MIDI Note On/Off beheer eers ’n draagbare D1-basiskern en daarna ’n SN76489-agtige driestem-kern.
 3. Pitch bend, CC1-modulasie en MIDI-klok word ontvang en diagnosties bewys.
 4. Die eerste hoorbare vertikale sny werk mono via een MAX98357 I2S-versterker; PWM bly 'n diagnostiese fallback.
 5. Elke stem kan links, regs of stereo gerouteer word.
@@ -35,12 +35,14 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 10. 'n Generiese USB-MIDI-kitaarkontroleerder kan note, akkoorde, per-kanaal bends en slides stuur; Fishman TriplePlay dien as verwysings-HIL-toestel, nie as hardgekodeerde afhanklikheid nie.
 11. Die pedaal ontvang MIDI sonder DAW via 'n klas-kompatibele eksterne USB-host/Raspberry Pi-roete na 'n geabstraheerde DIN/UART-invoer.
 12. Minstens twee verskillende geregistreerde kerninstansies kan laat in die MVP parallel loop met meetbare en veilige oorladinggedrag.
+13. BLE-MIDI werk deur dieselfde eventmodel op ’n tweede BLE-geskikte CircuitPython-bord; die ESP32-S2 faal veilig en hou USB-MIDI beskikbaar.
 
 ## Binne MVP
 
-- Een verwysingsbord: LOLIN/Wemos ESP32-S2 Mini met CircuitPython 10.x.
-- SN76489-lite is die eerste musikale kern; 'n minimale tweede kernadapter bewys laat-MVP parallelle multi-core-uitvoering voordat SID/OPL-akkuraatheid geëis word.
+- Een primêre verwysingsbord: LOLIN/Wemos ESP32-S2 Mini met CircuitPython 10.x, plus een BLE-geskikte tweede bord vir capability- en BLE-aanvaarding.
+- Die draagbare D1-basiskern is die eerste musikale kern; SN76489-lite volg tweede. Daarna volg 6581 SID, OPL2 en OPL3 in dié volgorde.
 - USB-MIDI-invoer en MIDI-kanale 1-16.
+- BLE-MIDI as capability-gated transport op ’n ondersteunde bord; die S2 het geen native BLE-pad nie.
 - Note On, Note Off, velocity, pitch bend, CC1, All Notes Off en MIDI Clock/Start/Stop/Continue.
 - Konfigureerbare pitch-bend range en multi-kanaal bend/slide-semantiek vir MIDI-kitaarkontroleerders.
 - USB-MIDI device mode vir Logic/ander hosts plus 'n DIN/UART-transport vir 'n eksterne USB-MIDI-host soos 'n Raspberry Pi- of DOREMiDi-klas toestel.
@@ -60,13 +62,14 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 - Volledige GM MIDI-lêer-afspeel.
 - Cycle-accurate OPL2/OPL3- of 6581-SID-klankakkuraatheid; dié adapters bly opvolgwerk ná die multi-core-kontrakbewys.
 - ’n Volwaardige sekwenser, arpeggiator of akkoordkomponis.
-- Bluetooth MIDI, DIN-MIDI-elektronika en ’n finale PCB/omhulsel.
+- Finale DIN-MIDI-elektronika en ’n finale PCB/omhulsel.
 - Ondersteuning wat beweer dat alle CircuitPython-borde identies werk.
 - Raspberry Pi Zero/2/3 as dieselfde firmwarebeeld; Linux/Blinka is ’n afsonderlike adapterteiken.
 
 ## MVP-sukseskriteria
 
 - ’n Skoon installasie vertoon ’n USB-MIDI-toestel op macOS en Windows.
+- ’n BLE-geskikte tweede bord adverteer en ontvang Note On/Off, CC en pitch bend; die S2 se negatiewe capability-toets destabiliseer nie USB nie.
 - Drie gelyktydige note is hoorbaar sonder vasloop of hangende note.
 - 'n Vroeë mono MAX98357-toetssein is hoorbaar voordat web-, DSP- of multi-core-werk begin.
 - 'n MIDI-kitaar kan 'n enkele noot, akkoord en slide/bend speel met 'n bend range wat met die kontroleerder ooreenstem.
@@ -84,5 +87,6 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 
 1. **Klankhek:** MAX98357 mono-I2S is die primêre vroeë pad; indien bordvermoë of stabiliteit faal, bewys PWM die debugpad en die impediment word gemeet.
 2. **Webhek:** webbeheer mag nie MIDI/klanktydsberekening merkbaar benadeel nie.
-3. **Kernhek:** ’n tweede kern word eers toegelaat nadat die kernpoort en SN76489-kontrakte groen is.
+3. **Kernhek:** SN76489 begin eers nadat die draagbare D1-basiskern groen en hoorbaar is; SID en OPL volg eers ná die registry- en resource-kontrakte.
 4. **Bordhek:** ’n nuwe bord kry eers ’n vermoënsprofiel en hardeware-toets; geen stil aannames nie.
+5. **BLE-hek:** ESP32-S2 is ’n verpligte veilige negatiewe toets; positiewe BLE-MIDI-aanvaarding gebeur slegs op ’n bord waarop `_bleio` werklik beskikbaar is.

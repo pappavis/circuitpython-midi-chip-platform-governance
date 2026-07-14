@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
-Actienr: MCP-ACT-MTM-AMEND-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+User-Story: SCOPE-AMENDMENT-002
+Actienr: MCP-ACT-SCOPE-AMEND-RISK-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -35,6 +35,9 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 | R-020 | Twee USB-device-endpoints word sonder 'n USB-host verbind en geen MIDI vloei nie | Hoog | Hoog | MIDI/Docs | Dokumenteer host/device-rolle; gebruik rekenaar, Raspberry Pi of eksterne USB-host; DIN/UART HIL | Oop |
 | R-021 | Device-proof publiseer UID, MAC, SSID of ander plaaslike data | Medium | Kritiek | QA/Release | Redigeer uitvoer; publiseer slegs poorttipe, bord-ID, firmwareweergawe, commit/hash en status | Beheer aktief |
 | R-022 | Eksterne USB-host ondersteun nie die betrokke controller of bend/clock-boodskap nie | Medium | Hoog | MIDI/QA | Klas-kompatibiliteitsmatriks; generiese plus Fishman HIL; geen handelsnaamwaarborg sonder toets nie | Oop |
+| R-023 | BLE-MIDI is Must, maar die primêre ESP32-S2 het geen native BLE-ondersteuning nie | Hoog | Hoog | Architect/Embedded | Capability gate; hou USB stabiel; kies ’n BLE-geskikte tweede bord in US-052 en lewer positiewe HIL in US-062 | Beheer aktief |
+| R-024 | Herhaalde macOS host-MIDI-scan abort in `python-rtmidi`/CoreMIDI | Hoog | Medium | QA/Tooling | Moenie dieselfde in-proses scan herhaal nie; isoleer toekomstige host-scan in ’n subprocess; firmware-HIL steun op USB descriptors en device logs | Oop - hostimpediment |
+| R-025 | MIDI-HIL hang of faal deur ’n poortkonflik met Thonny of ’n serial monitor | Medium | Hoog | QA/HIL | Preflight poorte; presies een REPL-kliënt; timeout, cleanup en herstelpad | Oop |
 
 ## Hoogste onmiddellike aksies
 
@@ -42,3 +45,4 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 2. Hou MCP-US-003 se `boot.py` minimaal en herstelbaar.
 3. Bewys 'n veilige, hoorbare MAX98357 mono-I2S-pad en hou PWM as meetbare fallback voordat webbeheer bygevoeg word.
 4. Publiseer geen toestelrugsteun, unieke USB-ID of plaaslike netwerkdetail nie.
+5. Behandel ’n sigbare `ESP_*`-SSID as onbevestig totdat ’n beheerde power-cycle of device-log die fisiese bord korreleer.

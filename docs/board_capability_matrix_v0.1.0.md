@@ -2,22 +2,22 @@
 
 <!--
 Bestand: board_capability_matrix_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Skeiding tussen bevestigde verwysingsbord en toekomstige adapterteikens.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
-Actienr: MCP-ACT-003-HIL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
+User-Story: SCOPE-AMENDMENT-002
+Actienr: MCP-ACT-SCOPE-AMEND-CAP-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 -->
 
-| Teiken | Runtime | USB-MIDI | Wi-Fi/web | PWM stereo | I2S | Status |
-|---|---|---|---|---|---|---|
-| LOLIN/Wemos ESP32-S2 Mini | CircuitPython 10.0.3 fisies bewys | MCP-US-003 USB CDC, CIRCUITPY, AudioControl, MIDIStreaming, PortIn en PortOut bewys | Beskikbaar, maar verbode in `boot.py` | Bestaande prototipe bewys | Spike nodig | Primêre MVP |
-| Generiese ESP32-S2 | CircuitPython | Bordprofiel-afhanklik | Gewoonlik beskikbaar | Pen/module-afhanklik | Firmware/bord-afhanklik | Later profiel |
-| ESP32-S3 | CircuitPython | Tipies beskikbaar | Beskikbaar | Profiel nodig | Sterk kandidaat | Later profiel |
-| RP2040-mikrobeheerder | CircuitPython | Bordafhanklik | Slegs Wi-Fi-variante/eksterne netwerk | Profiel nodig | Bordafhanklik | Later profiel |
-| Raspberry Pi Zero/Zero 2/3 | Raspberry Pi OS + Python/Blinka | Linux USB/MIDI-adapter | Linux-netwerk | Nie dieselfde firmwarepad nie | Linux-driverpad | Afsonderlike adapter |
+| Teiken | Runtime | USB-MIDI | BLE-MIDI | Wi-Fi/web | PWM stereo | I2S | Status |
+|---|---|---|---|---|---|---|---|
+| LOLIN/Wemos ESP32-S2 Mini | CircuitPython 10.0.3 fisies bewys | MCP-US-003 USB CDC, CIRCUITPY, AudioControl, MIDIStreaming, PortIn en PortOut bewys | Nie native ondersteun nie; veilige negatiewe capability-toets | Beskikbaar, maar verbode in `boot.py` | Bestaande prototipe bewys | Spike nodig | Primêre MVP |
+| Generiese ESP32-S2 | CircuitPython | Bordprofiel-afhanklik | Nie native ondersteun nie | Gewoonlik beskikbaar | Pen/module-afhanklik | Firmware/bord-afhanklik | Later profiel |
+| ESP32-S3 | CircuitPython | Tipies beskikbaar | Native `_bleio`-kandidaat; BLE-MIDI-HIL nodig | Beskikbaar | Profiel nodig | Sterk kandidaat | Tweede MVP-kandidaat |
+| RP2040-mikrobeheerder | CircuitPython | Bordafhanklik | Slegs BLE-bord/eksterne coprocessor indien amptelik ondersteun | Slegs Wi-Fi-variante/eksterne netwerk | Profiel nodig | Bordafhanklik | Later profiel |
+| Raspberry Pi Zero/Zero 2/3 | Raspberry Pi OS + Python/Blinka | Linux USB/MIDI-adapter | Linux BLE-adapterpad, nie dieselfde firmware nie | Linux-netwerk | Nie dieselfde firmwarepad nie | Linux-driverpad | Afsonderlike adapter |
 
 ## Geen universele bordaannames
 
@@ -25,3 +25,4 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 - Penne kom uit ’n bordprofiel of gebruikerconfig, nooit uit ’n verborge universele konstante nie.
 - ’n onbekende bord begin in diagnostiese/geen-klank-modus en druk ’n herstelbare fout.
 - “CircuitPython device” beteken hier mikrobeheerderfirmware; Raspberry Pi Linux-rekenaars gebruik ’n verenigbare host-adapter, nie dieselfde `code.py`-beeld nie.
+- ’n Sigbare `ESP_*`-SSID bewys nie bordidentiteit nie; bevestig dit met ’n beheerde power-cycle of eksplisiete toestel-/REPL-log voordat dit vir toetsing gebruik word.

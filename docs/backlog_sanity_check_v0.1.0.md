@@ -2,23 +2,23 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
-Actienr: MCP-ACT-MTM-AMEND-SANITY-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+User-Story: SCOPE-AMENDMENT-002
+Actienr: MCP-ACT-SCOPE-AMEND-SANITY-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 -->
 
 ## Resultaat
 
-Status: **PASS ná MIDI-transport-, multi-core- en device-proof-amendment**.
+Status: **PASS ná BLE-MIDI-, synth-core-prioriteit- en crashrisiko-amendment**.
 
 | Kontrole | Resultaat |
 |---|---|
 | Epic-ID's | 8 unieke epics, MCP-EPIC-001 tot MCP-EPIC-008 |
-| Story-ID's | 61 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-061 |
+| Story-ID's | 63 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-063 |
 | Duplikate story-ID's | Geen |
 | Verlore nommers | Geen |
 | Storytitel | Elke story het 'n titel |
@@ -34,11 +34,13 @@ Status: **PASS ná MIDI-transport-, multi-core- en device-proof-amendment**.
 | Produkvereiste | Gedek deur |
 |---|---|
 | USB-MIDI en enige klas-kompatibele bron | MCP-US-003, US-007, US-054, US-055 |
+| BLE-MIDI met veilige S2 capability gate | MCP-US-052, US-062 |
 | Standalone eksterne USB-host na DIN/UART | MCP-US-013, US-060 |
 | Note On/Off, velocity, pitch bend, modulation | MCP-US-006, US-009, US-010 |
 | Interne 120 BPM en eksterne MIDI clock | MCP-US-011, US-012 |
 | MAX98357 mono-I2S eerste, PWM fallback en stereo-besluit | MCP-US-016, US-015, US-021 |
-| SN76489 drie stemme | MCP-US-017, US-018 |
+| Draagbare D1-basiskern eerste | MCP-US-063 |
+| SN76489 drie stemme tweede | MCP-US-017, US-018 |
 | Per-stem links/regs/stereo | MCP-US-019 |
 | MIDI-kitaar bends, slides en hardeware-aanvaarding | MCP-US-058, US-059 |
 | Opsionele G-C-D-opstarttoets | MCP-US-020 |
@@ -67,6 +69,9 @@ Status: **PASS ná MIDI-transport-, multi-core- en device-proof-amendment**.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.
 - Fishman, MAX98357 en penname is verwysings-/profieldata, nie universele kodekonstantes nie.
 - US-060 en US-061 dek standalone hostbewys en multi-core resource guards sonder om die huidige bootstory te onderbreek.
+- US-062 maak BLE-MIDI `Must` sonder om native BLE op die ESP32-S2 te hallucineer; US-052 lewer die tweede-bordprofiel.
+- US-063 plaas die draagbare D1-basiskern voor SN76489; 6581 SID en OPL2/OPL3 bly die derde en volgende kernfamilies.
+- Vier onafhanklike macOS crashrapporte wys dieselfde `python-rtmidi`/CoreMIDI-abort; R-024 hou hierdie hosttooling-impediment weg van firmwareclaims.
 
 ## Governance-gap wat nou gesluit is
 
