@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is in **Sprint 1: platformfondasie**. MCP-US-003 se minimale, herstelbare CircuitPython USB-MIDI-profiel is op die fisiese ESP32-S2 bewys. MCP-US-051 bou nou die herhaalbare HIL-runner; daar is nog geen synth core in implementering en nog geen hoorbare chip-emulasie nie. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback. Daarna volg die draagbare D1-basiskern as eerste musikale kern.
+Die projek is in **Sprint 1: platformfondasie**. MCP-US-004 se klasgebaseerde capability discovery rapporteer nou bordprofiel, beskikbare CircuitPython-modules, geheue, I2S-penne en veilige klankbackend-kandidate. Die LOLIN S2 Mini het `audiobusio`, `synthio`, `usb_midi` en `wifi` fisies gerapporteer; `audiopwmio` is nie in die huidige firmwarebou beskikbaar nie. Daar is nog geen synth core en geen geaktiveerde klankuitvoer nie. Die volgende hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus.
 
 ## Begin hier
 
@@ -49,6 +49,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Snelbegin, installasie en ontwikkelomgewings](docs/quickstart_installation_v0.1.0.md)
 - [MCP-US-002 review en toetsbewys](docs/mcp_us_002_project_skeleton_review_v0.1.0.md)
 - [MCP-US-003 safe-boot review en HIL-bewys](docs/mcp_us_003_safe_boot_review_v0.1.0.md)
+- [MCP-US-004 bordvermoëns-review en bedrading](docs/mcp_us_004_board_capability_review_v0.1.0.md)
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)

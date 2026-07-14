@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.1.0
+# Versienommer: 0.2.0
 # Doel: Verifieer geredigeerde CircuitPython connection-, deploy-, boot- en execution-bewys.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-051 Hardware-In-The-Loop Test Runner
-# Actienr: MCP-ACT-051-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051
+# User-Story: MCP-US-004 Board Capability Discovery
+# Actienr: MCP-ACT-004-GREEN-005
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 
 import hashlib
 from pathlib import Path
@@ -35,6 +35,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/device_runtime.py",
                     "lib/midi_chip_platform/device_runtime.py",
+                ),
+                (
+                    "src/midi_chip_platform/platform_capabilities.py",
+                    "lib/midi_chip_platform/platform_capabilities.py",
                 ),
             )
         )

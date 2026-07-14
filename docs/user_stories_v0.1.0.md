@@ -2,19 +2,20 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: WIFI-RUNTIME-AMENDMENT-001
-Actienr: MCP-ACT-WIFI-AMEND-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
+User-Story: MCP-US-004 Board Capability Discovery
+Actienr: MCP-ACT-004-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 -->
 
 ## Statuslegende
 
 - **Done:** artefakte en bewys is gereed vir aanvaarding.
 - **In Review:** implementering en outomatiese bewys is gereed vir menslike aanvaarding.
+- **Impediment:** die aktiewe story kan nie finaal sluit voordat 'n gedokumenteerde eksterne of HIL-blokker herstel is nie.
 - **Next:** logiese volgende story; nog nie begin nie.
 - **MVP:** nodig vir die eerste aanvaarbare produkdemonstrasie.
 - **Stretch:** slegs indien die vaste MVP stabiel en binne begroting is.
@@ -29,7 +30,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-001 | Device And Source Baseline Inventory | Done | - | Bord, bronne, rugsteun, risiko’s en hergebruik is gedokumenteer |
 | MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | Done | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
-| MCP-US-004 | Board Capability Discovery | MVP | US-002 | Bordprofiel rapporteer penne, modules, geheue en ondersteunde klankbackends |
+| MCP-US-004 | Board Capability Discovery | Impediment | US-002 | Host en sagte toestelrun rapporteer profiel, IO3/5/7, modules, geheue en I2S-backend; finale hard-reset/remount-HIL wag |
 | MCP-US-005 | Configuration And Secret Boundary | MVP | US-003 | Publieke verstekke en private `settings.toml` werk; geheime-lektoets is groen |
 
 ## MCP-EPIC-002 MIDI And Clock
@@ -115,7 +116,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-050 | Host Simulator And Contract Tests | MVP | US-002, US-006 | Kern/MIDI/clock-toetse loop op macOS, Windows en Linux sonder bord |
-| MCP-US-051 | Hardware-In-The-Loop Test Runner | In Progress/MVP | US-003, US-015 | Connection, deploy en execution proof plus USB-MIDI en klankmeetstappe lewer 'n geredigeerde naspeurbare verslag |
+| MCP-US-051 | Hardware-In-The-Loop Test Runner | In Review | US-003, US-015 | Connection/deploy/execution-runner is groen; USB-MIDI is bewys en die klankmeetadapter volg ná US-015/016 |
 | MCP-US-052 | Cross-Board Capability Profiles | MVP | US-004 | ’n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via ’n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | MVP | US-003, US-007 | Toestel verskyn en ontvang note op ’n skoon Windows-rekenaar |

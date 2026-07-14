@@ -2,13 +2,13 @@
 
 <!--
 Bestand: device_connection_proof_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Definieer veilige, herhaalbare bewys dat die bedoelde CircuitPython-kode op die fisiese bord loop.
 Sprint: Sprint 1
 Epic: MCP-EPIC-001 en MCP-EPIC-008
-User-Story: MCP-US-003 en MCP-US-051
-Actienr: MCP-ACT-003-HIL-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / DEVICE-CONNECTION-PROOF-001
+User-Story: MCP-US-003, MCP-US-004 en MCP-US-051
+Actienr: MCP-ACT-004-HIL-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 -->
 
 ## Bewysvlakke
@@ -76,3 +76,21 @@ private-identifiers: REDACTED
 ```
 
 Hierdie uitvoer bewys nie nog klank nie. Die runner se klankmeetadapter en menslike hoorbare aanvaarding volg nadat US-015/016 'n fisiese uitvoerpad lewer.
+
+## MCP-US-004 capability-bewys, 2026-07-14
+
+Die sagte runtime-run het direk vanaf die fisiese S2 Mini gerapporteer:
+
+```text
+circuitpython-midi-chip-platform v0.4.0 | story=MCP-US-004 | release-date=2026-07-14
+CAPABILITY_DISCOVERY_STATUS=PASS
+BOARD_ID=lolin_s2_mini
+BOARD_PROFILE=KNOWN
+I2S_PINS=BCLK:IO5,WS:IO3,DATA:IO7->DIN
+I2S_PIN_STATUS=AVAILABLE
+MODULES=audiobusio:yes,audiopwmio:no,synthio:yes,usb_midi:yes,wifi:yes
+AUDIO_BACKENDS=i2s-max98357a-mono
+DEVICE_EXECUTION_STATUS=READY
+```
+
+Die opvolgende programmatiese harde reset het USB-identiteit behou, maar macOS het nie CIRCUITPY of CDC/REPL herenumerateer nie. Finale HIL bly geblokkeer totdat 'n fisiese power-cycle die volume en REPL herstel en die sewe manifesthashes slaag.

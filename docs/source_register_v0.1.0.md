@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: WIFI-RUNTIME-AMENDMENT-001
-Actienr: MCP-ACT-WIFI-AMEND-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
+User-Story: MCP-US-004 Board Capability Discovery
+Actienr: MCP-ACT-004-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 -->
 
 ## Primêre tegniese bronne
@@ -19,6 +19,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 | [CircuitPython `supervisor`](https://docs.circuitpython.org/en/latest/shared-bindings/supervisor/) | USB-identiteit, run reason, safe-mode-rede en runtime-status | Omitted VID/PID behou bordverstekke; USB-wysiging gebeur slegs in `boot.py` |
 | [CircuitPython USB customization](https://learn.adafruit.com/customizing-usb-devices-in-circuitpython?view=all) | Bootvolgorde, `boot_out.txt`, endpointbegroting en recovery | ESP32-S2 het 'n beperkte endpointbegroting; HIL bly verpligtend |
 | [CircuitPython `audiobusio.I2SOut`](https://docs.circuitpython.org/en/stable/shared-bindings/audiobusio/) | I2S-penkontrak en sample-uitvoer | Primêre amptelike API; beskikbaarheid is bordbou-afhanklik |
+| [WEMOS S2 Mini](https://docs.wemos.cc/en/latest/s2/s2_mini.html) | Verwysingsbord, 3.3 V-logika, 27 I/O, 4 MB flash en 2 MB PSRAM | Amptelike bordbron; runtime/HIL bevestig werklike aliasse en modules |
+| [Espressif ESP32-S2 I2S](https://docs.espressif.com/projects/esp-idf/en/release-v5.2/esp32s2/api-reference/peripherals/i2s.html) | Een I2S-perifeer en BCLK/WS/DOUT-semantiek | Primêre silikon/driverbron; CircuitPython API bly die firmwarekontrak |
 | [Adafruit MAX98357 overview](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/overview) | Mono-I2S-versterker, sample rates, mono-meng en geen MCLK | Amptelike produkhandleiding; werklike bord/HIL bly verpligtend |
 | [Adafruit MAX98357 pinouts](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/pinouts) | BCLK/LRC/DIN, bridge-tied luidsprekeruitgang, krag en gain/mode | Primêre veiligheids- en bedradingbron |
 | [CircuitPython `synthio`](https://docs.circuitpython.org/en/latest/shared-bindings/synthio/) | Eksperimentele synth, panning, envelope en bend-spike | Primêre API, maar eksplisiet eksperimenteel; nie ons enigste kernbasis nie |

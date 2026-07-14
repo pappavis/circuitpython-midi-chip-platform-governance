@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: WIFI-RUNTIME-AMENDMENT-001
-Actienr: MCP-ACT-WIFI-AMEND-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
+User-Story: MCP-US-004 Board Capability Discovery
+Actienr: MCP-ACT-004-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -17,7 +17,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 | R-002 | Te veel USB-endpoints plaas ESP32-S2 in safe mode | Medium | Hoog | Embedded | Minimale `boot.py`; skakel onnodige HID/CDC doelbewus; herstelrunbook | Oop |
 | R-003 | Onbehoorlike VID/PID veroorsaak konflik of verspreidingsprobleem | Medium | Hoog | Release/Architect | Gebruik ontwikkelverstekke; besluit geldige produkidentiteit voor release | Oop |
 | R-004 | Busy-wait PWM blokkeer MIDI, web en REPL | Hoog | Hoog | DSP/Embedded | Koöperatiewe scheduler; buffer-/I2S-spike; jittermeting | Oop |
-| R-005 | I2S-ondersteuning of penkombinasie verskil per bord | Medium | Hoog | Embedded | Vermoënsprofiel; runtime-diagnose; MAX98357 HIL; PWM fallback | Oop |
+| R-005 | I2S-ondersteuning of penkombinasie verskil per bord | Medium | Hoog | Embedded | US-004 profiel/runtime-diagnose bevestig S2 IO5/IO3/IO7 en `audiobusio`; MAX98357 klank-HIL volg in US-016 | Beheer aktief |
 | R-006 | Webserver gebruik te veel RAM/sokke | Hoog | Hoog | Web/QA | Een kliënt; klein statiese bates; pollingbegroting; geheuemeting | Oop |
 | R-007 | “Alle CircuitPython-borde” word verkeerd as identies aangebied | Hoog | Hoog | Architect/Docs | Profielkontrak; ondersteuningsmatriks; geen onbevestigde eis nie | Beheer aktief |
 | R-008 | Raspberry Pi Linux en mikrobeheerderfirmware word vermeng | Medium | Medium | Architect | Afsonderlike Blinka/host-adapter en toetsbaan | Beheer aktief |
@@ -40,6 +40,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 | R-025 | MIDI-HIL hang of faal deur ’n poortkonflik met Thonny of ’n serial monitor | Medium | Hoog | QA/HIL | Preflight poorte; presies een REPL-kliënt; timeout, cleanup en herstelpad | Oop |
 | R-026 | Fallback access point is oop, voorspelbaar of lek credentials/kliëntidentiteit | Medium | Kritiek | Security/Web | Beveiligde AP as verstek; credentials uit private config of veilige provisioning; geen geheime, MAC’s of unieke ID’s in logs/repo nie | Oop |
 | R-027 | Onbegrensde join/reconnect, HTTP polling of debuglogging veroorsaak dropout, RAM-druk of flashslytasie | Hoog | Hoog | Embedded/Web/QA | Timeout en backoff; koöperatiewe poll; een kliënt; debug af in produksie; gebeurtenis-/koersbegrensde serial logging en geen normale flashlog nie | Oop |
+| R-028 | Programmatiese harde reset laat USB-toestel sonder CIRCUITPY/CDC-herenumerasie | Medium | Hoog | Embedded/QA | Fisiese power-cycle; safe-mode/recovery-runbook; geen volgende story of release totdat volume, REPL, bootbanner en HIL-manifest herstel is nie | Oop - US-004 impediment |
 
 ## Hoogste onmiddellike aksies
 
