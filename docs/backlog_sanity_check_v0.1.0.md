@@ -1,0 +1,78 @@
+# Backlog Sanity Check
+
+<!--
+Bestand: backlog_sanity_check_v0.1.0.md
+Versienommer: 0.1.0
+Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
+Sprint: Sprint 0
+Epic: Alle epics
+User-Story: MCP-US-001 Device And Source Baseline Inventory
+Actienr: MCP-ACT-001-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / GOVERNANCE-AMENDMENT-001
+-->
+
+## Resultaat
+
+Status: **PASS met governance-aanvulling**.
+
+| Kontrole | Resultaat |
+|---|---|
+| Epic-ID's | 8 unieke epics, MCP-EPIC-001 tot MCP-EPIC-008 |
+| Story-ID's | 57 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-057 |
+| Duplikate story-ID's | Geen |
+| Verlore nommers | Geen |
+| Storytitel | Elke story het 'n titel |
+| Fase/prioriteitsbedoeling | Elke story is Done, Next/MVP, MVP, MVP-late, Stretch, Later of Parking lot |
+| Afhanklikheid | Elke story het 'n afhanklikheidsveld of eksplisiete `-` |
+| Aanvaardingsbewys | Elke story het 'n kern-aanvaardingsbewys |
+| Leesbare backlog | `docs/user_stories_v0.1.0.md` |
+| Redigeerbare Kanban | `outputs/.../circuitpython_midi_chip_platform_mvp_kanban_v0.1.0.xlsx` |
+| Release/governance | `AGENTS.md` en `docs/agile_delivery_release_plan_v0.1.0.md` |
+
+## Requirement-na-story-dekking
+
+| Produkvereiste | Gedek deur |
+|---|---|
+| USB-MIDI en enige klas-kompatibele bron | MCP-US-003, US-007, US-054, US-055 |
+| Note On/Off, velocity, pitch bend, modulation | MCP-US-006, US-009, US-010 |
+| Interne 120 BPM en eksterne MIDI clock | MCP-US-011, US-012 |
+| PWM debug-uitvoer en I2S-besluit | MCP-US-015, US-016, US-021 |
+| SN76489 drie stemme | MCP-US-017, US-018 |
+| Per-stem links/regs/stereo | MCP-US-019 |
+| Opsionele G-C-D-opstarttoets | MCP-US-020 |
+| Plaaslike webbeheer | MCP-US-022 tot US-027 |
+| Virtuele web-MIDI-klawerbord | MCP-US-025 |
+| Eenvoudige sekwenser | MCP-US-026 |
+| MIDI-lêers binne kernlimiete | MCP-US-028 tot US-030 |
+| Arpeggiasie en akkoordprogressies | MCP-US-031, US-032 |
+| Patch save/load | MCP-US-033 |
+| Kiesbare synth core | MCP-US-034 tot US-036 |
+| Meer as een kern gelyktydig | MCP-US-037 |
+| 6581 SID en SID-lêers | MCP-US-038 tot US-040 |
+| OPL2/OPL3 | MCP-US-041, US-042 |
+| DSP delay/reverb laat in MVP | MCP-US-043 tot US-045 |
+| Pedaal, voetskakelaar, krag en PCB | MCP-US-046 tot US-048 |
+| Toekomstige oudio-invoer | MCP-US-049 (Parking lot) |
+| Host-, HIL- en kruisbordtoetse | MCP-US-050 tot US-053 |
+| Beginnerdiagnose en MVP-release | MCP-US-056, US-057 |
+
+## Governance-gap wat nou gesluit is
+
+Die oorspronklike backlog het reeds die produkfunksies gedek, maar drie prosesse was nie as formele releasehekke beskryf nie:
+
+1. 'n AST-afdwingbare verbod op globale runtime-status en modulevlak helperfunksies.
+2. 'n verpligte bydraerekord vir elke virtuele spanrol.
+3. 'n lessons-learned-checkpoint na elke drie of vier voltooide stories.
+
+Hierdie gapings is deur `AGENTS.md`, die delivery/releaseplan en die versterkte DoR/DoD gesluit.
+
+## Herhalingskontrole
+
+Hierdie sanity check word herhaal wanneer:
+
+- stories bygevoeg, verwyder, hernommer of herorden word;
+- 'n epic sluit;
+- 'n release candidate voorberei word;
+- 'n side quest na MVP-scope bevorder word;
+- Markdown- en Excel-statusse nie meer versoen nie.
+

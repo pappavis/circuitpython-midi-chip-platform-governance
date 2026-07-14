@@ -121,14 +121,21 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 - Gebruikerwaarde, afhanklikhede en nie-doelwitte is duidelik.
 - Aanvaardingsbewys kan op host, bord of albei uitgevoer word.
 - Benodigde hardeware en veiligheidsrisiko’s is bekend.
+- Die voorafgaande stories in die afhanklikheidsketting is `Done` of 'n uitsondering is eksplisiet deur die Product Owner aanvaar.
+- Die ontwerp wys watter klas elke stuk runtime-status besit en hoe afhanklikhede ingespuit word.
+- Die plan bevat 'n rooi AST-/importtoets wanneer nuwe Python-modules geskep word.
+- Elke virtuele spanrol het 'n bydrae of gemotiveerde `Not impacted`-inskrywing.
 - Product Owner het die ongeveer 50-woord uitvoerplan aanvaar.
 
 ## Definition of Done
 
 - Rooi toets is gedemonstreer of vooraf as verwagte mislukking vasgelê.
 - Groen eenheid-/kontraktoetse slaag.
+- Geen globale runtime-veranderlikes, `global`-statements of modulevlak helperfunksies is teenwoordig nie.
+- Alle veranderlike status behoort aan klasinstansies; import begin geen synth, MIDI, audio, Wi-Fi, web- of borddiens nie.
+- Die synthmodules kan as biblioteek ingevoer word en die weblaag kan afhanklikhede instansieer sonder outomatiese startup.
 - Relevante hardewaretoets is deur mens of meetinstrument aanvaar.
 - Dokumentasie, headers, backlog, ChatID en story-ID is bygewerk.
+- Die span het bepaal of hierdie closure 'n drie-/vier-story lessons-learned-checkpoint aktiveer en dit, indien verskuldig, voltooi.
 - Geen geheime, plaaslike konstantes of onbedoelde binêre lêers is gestage nie.
 - Commit en push is voltooi; demo- teenoor produksestatus is eerlik.
-

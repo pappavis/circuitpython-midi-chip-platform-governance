@@ -48,9 +48,11 @@ Legenda: **A** aanspreeklik, **R** uitvoerend verantwoordelik, **C** geraadpleeg
 2. Die span lewer ’n ongeveer 50-woord uitvoerplan met lêers, rooi/groen-toets en menslike aanvaarding.
 3. Geen implementering begin voor eksplisiete goedkeuring nie, behalwe wanneer die gebruiker daardie spesifieke hek vooraf ophef.
 4. Architect, spesialis-ingenieur, QA en Release gee altyd ’n sigbare inset.
+   Elke ander spanrol gee ook 'n bydrae of 'n gemotiveerde `Not impacted`; die span word nie bloot as 'n etiket gebruik nie.
 5. Die Scrum Master hou side quests in Later/Parking Lot en verander nie stilweg die huidige sprint nie.
 6. Na groen host-toetse volg hardeware-aanvaarding indien fisiese gedrag geraak word.
 7. Dokumentasie, Kanban, commit en push sluit die story af.
+8. Na elke drie of vier voltooide stories fasiliteer die Scrum Master 'n lessons-learned-checkpoint voor die volgende releasebesluit.
 
 ## Plaaslike Ollama-beleid
 
@@ -63,4 +65,3 @@ Legenda: **A** aanspreeklik, **R** uitvoerend verantwoordelik, **C** geraadpleeg
 ## Voorstel vir eerste Ollama-delegering
 
 In MCP-US-002 kan `phi4-mini` ’n konseplys van host-toetsname vir die poortinterfaces voorstel. Geen kode, geheime of toesteldata word gedeel nie; Codex keur die lys, skryf die toetse en bewys die rooi/groen-fases.
-

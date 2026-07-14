@@ -24,6 +24,9 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Risiko-register](docs/risk_register_v0.1.0.md)
 - [Bronregister](docs/source_register_v0.1.0.md)
 - [Excel Kanban-backlog](outputs/CHATOD-20260714-MCP-CP-MVP-001/circuitpython_midi_chip_platform_mvp_kanban_v0.1.0.xlsx)
+- [Agile delivery- en releaseplan](docs/agile_delivery_release_plan_v0.1.0.md)
+- [Backlog sanity check](docs/backlog_sanity_check_v0.1.0.md)
+- [Afdwingbare agent- en kodereels](AGENTS.md)
 
 ## Belangrike veiligheidsreëls
 
@@ -35,10 +38,14 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 ## Ontwikkelbeginsels
 
 - Klasgebaseerde ontwerp sonder globale toepassingsstatus.
+- Geen globale veranderlikes, `global`-statements, modulevlak helperfunksies of import-newe-effekte nie.
+- Alle runtime-status behoort aan klasinstansies en word via dependency injection gekoppel.
 - Klein stories met rooi/groen-toetse en eksplisiete hardeware-aanvaarding.
 - Bordvermoëns word ontdek; bordname, MIDI-toestelle en penne word nie as universele konstantes aanvaar nie.
 - MIDI, kernlogika, klankuitvoer en webbeheer word deur duidelike poorte geskei.
 - Die klankenjin bly vervangbaar: SN76489 eerste; SID, OPL2/OPL3 en ander kerne later.
+- Die span volg backlogvolgorde; side quests word georden en nie stilweg geimplementeer nie.
+- Lessons learned word na elke drie of vier voltooide stories en by epic-/releasegrense opgedateer.
 
 ## Lisensie
 
