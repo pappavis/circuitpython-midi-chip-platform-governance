@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.8.0
+# Versienommer: 0.9.0
 # Doel: Spesifiseer geredigeerde connection-, deploy-, boot- en execution-HIL-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-009 Velocity And Note-Off Semantics
-# Actienr: MCP-ACT-009-RED-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
+# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
+# Actienr: MCP-ACT-010-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
 
 from io import StringIO
 
@@ -20,7 +20,7 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 13
+        assert len(manifest.entries) == 14
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
@@ -54,6 +54,10 @@ class TestHilDeploymentManifest:
             "src/midi_chip_platform/midi_semantics.py",
             "lib/midi_chip_platform/midi_semantics.py",
         ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/midi_performance.py",
+            "lib/midi_chip_platform/midi_performance.py",
+        ) in manifest.entries
 
 
 class TestHardwareInLoopVerifier:
@@ -79,14 +83,14 @@ class TestHardwareInLoopVerifier:
             device_path.write_bytes(source_relative.encode("ascii"))
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.10.0 | story=MCP-US-009 | "
+            "circuitpython-midi-chip-platform v0.11.0 | story=MCP-US-010 | "
             "release-date=2026-07-15\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.10.0 | story=MCP-US-009 | "
+            "circuitpython-midi-chip-platform v0.11.0 | story=MCP-US-010 | "
             "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
         )
         verifier = HardwareInLoopVerifier(

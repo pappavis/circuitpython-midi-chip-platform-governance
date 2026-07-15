@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek het **Sprint 2: MIDI en clock** se eerste host-snit bereik. MCP-US-006 se draagbare `NoteEvent`, `ControlEvent` en `ClockEvent` is gereed vir menslike aanvaarding; USB-/BLE-/UART-ontvangers kom eers daarna. MCP-US-005 se konfigurasiegrens is host-groen, maar sy fisiese deploy wag op herstel van die leesalleen `CIRCUITPY`-media. Daar is nog geen synth core en geen geaktiveerde klank-, MIDI-receive- of Wi-Fi-diens nie.
+Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.11.0**. Draagbare events, 'n generiese USB-MIDI receive-loop, veilige BLE-capability gating, kanaalroetering, note-off-semantiek en per-kanaal pitch bend/CC1-toestand is host-groen. Die Lolin S2 se BLE-negatiewe pad is korrek; positiewe BLE-HIL wag op 'n werklike BLE-bord. MCP-US-005/007 se fisiese deploy wag steeds op herstel van die leesalleen `CIRCUITPY`-media. Daar is nog geen synth core en geen geaktiveerde klank-, MIDI-receive-, BLE- of Wi-Fi-diens op die toestel nie.
 
 ## Begin hier
 
@@ -52,7 +52,13 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MCP-US-004 bordvermoëns-review en bedrading](docs/mcp_us_004_board_capability_review_v0.1.0.md)
 - [MCP-US-005 konfigurasie- en geheimegrens-review](docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0.md)
 - [MCP-US-006 draagbare MIDI-eventmodel-review](docs/mcp_us_006_portable_event_model_review_v0.1.0.md)
+- [MCP-US-007 USB-MIDI receive-loop-review](docs/mcp_us_007_usb_midi_receive_review_v0.1.0.md)
+- [MCP-US-062 BLE-MIDI capability-review](docs/mcp_us_062_ble_midi_capability_review_v0.1.0.md)
+- [MCP-US-008 MIDI-kanaalrouter-review](docs/mcp_us_008_midi_channel_router_review_v0.1.0.md)
+- [MCP-US-009 note-off-semantiek-review](docs/mcp_us_009_note_semantics_review_v0.1.0.md)
+- [MCP-US-010 pitch bend/CC1-review](docs/mcp_us_010_pitch_bend_cc1_review_v0.1.0.md)
 - [Sprint 1 lessons learned - checkpoint 001](docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0.md)
+- [Sprint 2 lessons learned - checkpoint 001](docs/lessons_learned_sprint_2_checkpoint_001_v0.1.0.md)
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)

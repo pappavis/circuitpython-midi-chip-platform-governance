@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
-Actienr: MCP-ACT-006-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
+User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
+Actienr: MCP-ACT-010-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens en MCP-US-006 se draagbare eventmodel. Dit maak nog geen klank en ontvang nog geen fisiese note nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
+Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek en per-kanaal pitch bend/CC1-toestand. Dit maak nog geen klank en ontvang nog geen fisiese note in die gedeployde firmware nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
 
 ## Wat jy nodig het
 
@@ -74,7 +74,7 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.6.0 | story=MCP-US-006 | release-date=2026-07-15
+circuitpython-midi-chip-platform v0.11.0 | story=MCP-US-010 | release-date=2026-07-15
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
@@ -92,6 +92,17 @@ python -m pytest -q tests/test_domain_events.py
 ```
 
 Verwag `EVENT_MODEL_STATUS=PASS`, gevolg deur een note-, control-, pitch-bend- en clockreël. Die pytest-opdrag moet met `passed` eindig. Dit bewys die interne model, nie fisiese USB-MIDI-ontvangs nie.
+
+## Toets BLE-gating en performance-controls op die host
+
+Hierdie opdragte begin geen BLE-radio en maak geen klank nie:
+
+```bash
+python -m midi_chip_platform ble-diagnose --board-id lolin_s2_mini
+python -m midi_chip_platform performance-diagnose --channel 4 --pitch-bend 12288 --modulation 127 --pitch-bend-range 2
+```
+
+Die eerste opdrag eindig doelbewus met statuskode `1` en rapporteer `board_has_no_native_ble`; dit is die korrekte veilige gedrag vir die ESP32-S2. Die tweede rapporteer `MIDI_PERFORMANCE_STATUS=PASS`, `PITCH_BEND_SEMITONES=1.000000` en `CC1_NORMALIZED=1.000000`.
 
 ## Private CircuitPython-instellings
 
@@ -238,6 +249,6 @@ Lees [Device Connection Proof](device_connection_proof_v0.1.0.md). Dit onderskei
 
 Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
-## Volgende logiese story
+## Huidige pausepunt
 
-MCP-US-005 is host-groen en wag op sy menslike toestel-deploytoets. MCP-US-006 is host-groen en wag op Product Owner-aanvaarding. Die volgende logiese story ná dié twee hekke is **MCP-US-007: USB MIDI Receive Loop**; implementering vereis 'n nuwe plan-goedkeuring.
+MCP-US-008 en MCP-US-009 is host-Done. MCP-US-005 en MCP-US-007 wag op die menslike toestel-deploy nadat die leesalleen `CIRCUITPY`-media herstel is. MCP-US-062 se positiewe BLE-HIL wag op 'n werklike BLE-geskikte tweede bord. MCP-US-010 se per-kanaal bend/CC1-toestand is host-groen; sy hoorbare aanvaarding wag op MCP-US-016 se MAX98357-I2S-pad en MCP-US-063 se D1-kern. Dit is die doelbewuste pausepunt voordat enige hoorbare resultaat beweer word.

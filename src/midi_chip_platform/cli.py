@@ -1,11 +1,11 @@
 # Bestand: cli.py
-# Versienommer: 0.5.0
-# Doel: Bied IDE-onafhanklike host-, MIDI-, BLE-capability- en HIL-diagnose.
+# Versienommer: 0.6.0
+# Doel: Bied IDE-onafhanklike host-, MIDI-control-, BLE- en HIL-diagnose.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-062 BLE MIDI Transport And Capability Gate
-# Actienr: MCP-ACT-062-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-062
+# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
+# Actienr: MCP-ACT-010-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
 
 import argparse
 import sys
@@ -13,6 +13,7 @@ import sys
 from midi_chip_platform.ble_midi import BleMidiCapabilityGate, ImportModuleProbe
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.hil import HardwareInLoopVerifierFactory
+from midi_chip_platform.midi_performance import MidiPerformanceState
 from midi_chip_platform.release import ReleaseMetadata
 
 
@@ -36,6 +37,8 @@ class CommandLineApplication:
             return self._diagnose_events()
         if parsed.command == "ble-diagnose":
             return self._diagnose_ble(parsed)
+        if parsed.command == "performance-diagnose":
+            return self._diagnose_performance(parsed)
         if parsed.command == "hil-verify":
             return self._hil_verify(parsed)
         parser.print_help(file=self._output)
@@ -58,6 +61,14 @@ class CommandLineApplication:
             help="report BLE-MIDI support without starting radio services",
         )
         ble_parser.add_argument("--board-id", required=True)
+        performance_parser = subparsers.add_parser(
+            "performance-diagnose",
+            help="normalize pitch bend and CC1 for one MIDI channel",
+        )
+        performance_parser.add_argument("--channel", type=int, default=1)
+        performance_parser.add_argument("--pitch-bend", type=int, default=8192)
+        performance_parser.add_argument("--modulation", type=int, default=0)
+        performance_parser.add_argument("--pitch-bend-range", type=float, default=2.0)
         hil_parser = subparsers.add_parser(
             "hil-verify",
             help="verify redacted CircuitPython connection, deployment and execution proof",
@@ -115,3 +126,17 @@ class CommandLineApplication:
         )
         self._output.write(f"{capability.report_line()}\n")
         return 0 if capability.is_supported else 1
+
+    def _diagnose_performance(self, parsed):
+        state = MidiPerformanceState(pitch_bend_range=parsed.pitch_bend_range)
+        state.process(ControlEvent.pitch_bend(parsed.channel, parsed.pitch_bend))
+        state.process(ControlEvent.control_change(parsed.channel, 1, parsed.modulation))
+        channel_state = state.channel_state(parsed.channel)
+        self._output.write("MIDI_PERFORMANCE_STATUS=PASS\n")
+        self._output.write(
+            f"CHANNEL={channel_state.channel};"
+            f"PITCH_BEND_RAW={channel_state.pitch_bend_value};"
+            f"PITCH_BEND_SEMITONES={channel_state.pitch_bend_semitones:.6f};"
+            f"CC1_NORMALIZED={channel_state.modulation:.6f}\n"
+        )
+        return 0

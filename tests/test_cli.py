@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.11.0
+# Versienommer: 0.12.0
 # Doel: Toets host-diagnose, HIL-CLI en gedeelde release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-009 Velocity And Note-Off Semantics
-# Actienr: MCP-ACT-009-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
+# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
+# Actienr: MCP-ACT-010-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
 
 from io import StringIO
 from pathlib import Path
@@ -46,8 +46,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.10.0 | "
-            "story=MCP-US-009 | release-date=2026-07-15\n"
+            "circuitpython-midi-chip-platform v0.11.0 | "
+            "story=MCP-US-010 | release-date=2026-07-15\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -83,6 +83,30 @@ class TestCommandLineApplication:
         assert exit_code == 1
         assert "BLE_MIDI_STATUS=UNSUPPORTED" in output.getvalue()
         assert "reason=board_has_no_native_ble" in output.getvalue()
+
+    def test_performance_diagnose_reports_normalized_bend_and_cc1(self) -> None:
+        output = StringIO()
+        application = CommandLineApplication(output=output)
+
+        exit_code = application.run(
+            (
+                "performance-diagnose",
+                "--channel",
+                "4",
+                "--pitch-bend",
+                "12288",
+                "--modulation",
+                "127",
+                "--pitch-bend-range",
+                "2",
+            )
+        )
+
+        assert exit_code == 0
+        assert "MIDI_PERFORMANCE_STATUS=PASS" in output.getvalue()
+        assert "CHANNEL=4" in output.getvalue()
+        assert "PITCH_BEND_SEMITONES=1.000000" in output.getvalue()
+        assert "CC1_NORMALIZED=1.000000" in output.getvalue()
 
     def test_hil_verify_delegates_paths_without_echoing_them(self) -> None:
         output = StringIO()
