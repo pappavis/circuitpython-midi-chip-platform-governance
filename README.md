@@ -57,6 +57,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MCP-US-008 MIDI-kanaalrouter-review](docs/mcp_us_008_midi_channel_router_review_v0.1.0.md)
 - [MCP-US-009 note-off-semantiek-review](docs/mcp_us_009_note_semantics_review_v0.1.0.md)
 - [MCP-US-010 pitch bend/CC1-review](docs/mcp_us_010_pitch_bend_cc1_review_v0.1.0.md)
+- [Outonome MIDI-batch hostaanvaarding en toestelverbinding](docs/autonomous_midi_batch_host_acceptance_v0.1.0.md)
 - [Sprint 1 lessons learned - checkpoint 001](docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0.md)
 - [Sprint 2 lessons learned - checkpoint 001](docs/lessons_learned_sprint_2_checkpoint_001_v0.1.0.md)
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
