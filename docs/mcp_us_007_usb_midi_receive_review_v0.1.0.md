@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mcp_us_007_usb_midi_receive_review_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Dokumenteer die USB-MIDI ontvangsadapter, hostbewys en oorblywende HIL-aanvaarding.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock
 User-Story: MCP-US-007 USB MIDI Receive Loop
-Actienr: MCP-ACT-007-REVIEW-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IN-REVIEW
+Actienr: MCP-ACT-051-IMP-001-DOC-004
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 -->
 
 ## Gelewer
@@ -25,13 +25,14 @@ Die nuwe kontraktoets het eers tydens collection gefaal omdat `midi_chip_platfor
 
 ## Status
 
-**In Review.** Hostgedrag is groen. Fisiese USB-MIDI Note On/Off op die Wemos S2 wag totdat die Product Owner weer by die toestel is en die leesalleen `CIRCUITPY`-impediment opgelos is. Geen USB-MIDI-hardewareaanvaarding word uit hosttoetse afgelei nie.
+**In Review.** Hostgedrag en die dependency-closed deploy, harde boot en clean-import-bewys is fisies groen. USB-MIDI Note On/Off op die Wemos S2 bly die aanvaardingshek. Geen MIDI-boodskapontvangs word uit hashes of imports alleen afgelei nie.
 
 ## Menslike toets later
 
-1. Herstel skryftoegang tot `CIRCUITPY` en deploy die HIL-manifest.
-2. Koppel enige klas-kompatibele MIDI-bron via rekenaar, DAW of eksterne USB-host.
-3. Stuur Note On en Note Off op enige kanaal.
-4. Verifieer in die REPL dat die domeinevent se kanaal, noot en velocity korrek is.
+1. Installeer `device/requirements.txt` met CircUp en deploy die 16-lêer HIL-manifest.
+2. Bewys `manifest-closure`, `device-libraries`, `DEVICE_IMPORT_STATUS=PASS` en execution.
+3. Koppel enige klas-kompatibele MIDI-bron via rekenaar, DAW of eksterne USB-host.
+4. Stuur Note On en Note Off op enige kanaal.
+5. Verifieer in die REPL dat die domeinevent se kanaal, noot en velocity korrek is.
 
 Hierdie story maak nog nie klank nie.

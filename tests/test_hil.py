@@ -1,17 +1,22 @@
 # Bestand: test_hil.py
-# Versienommer: 0.9.0
-# Doel: Spesifiseer geredigeerde connection-, deploy-, boot- en execution-HIL-bewys.
+# Versienommer: 0.11.1
+# Doel: Spesifiseer dependency-closed connection-, deploy-, import- en execution-HIL-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
-# Actienr: MCP-ACT-010-RED-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
+# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+# Actienr: MCP-ACT-051-IMP-001-RED-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 
 from io import StringIO
+from pathlib import Path
 
 from midi_chip_platform.hil import (
+    CircuitPythonLibraryManifest,
+    DeploymentDependencyInspector,
+    HardwareInLoopDeployer,
     HardwareInLoopVerifier,
     HilDeploymentManifest,
+    SerialHardResetProbe,
     SerialExecutionProbe,
 )
 
@@ -20,7 +25,7 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 14
+        assert len(manifest.entries) == 16
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
@@ -33,6 +38,14 @@ class TestHilDeploymentManifest:
         assert (
             "src/midi_chip_platform/configuration.py",
             "lib/midi_chip_platform/configuration.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/ports.py",
+            "lib/midi_chip_platform/ports.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/core.py",
+            "lib/midi_chip_platform/core.py",
         ) in manifest.entries
         assert (
             "src/midi_chip_platform/events.py",
@@ -59,6 +72,182 @@ class TestHilDeploymentManifest:
             "lib/midi_chip_platform/midi_performance.py",
         ) in manifest.entries
 
+    def test_default_manifest_is_closed_over_internal_imports(self) -> None:
+        source_root = Path(__file__).resolve().parents[1]
+
+        missing = DeploymentDependencyInspector().find_missing(
+            source_root=source_root,
+            manifest=HilDeploymentManifest.default(),
+        )
+
+        assert missing == ()
+
+    def test_inspector_reports_removed_internal_dependency(self) -> None:
+        source_root = Path(__file__).resolve().parents[1]
+        entries = tuple(
+            entry
+            for entry in HilDeploymentManifest.default().entries
+            if entry[0] != "src/midi_chip_platform/ports.py"
+        )
+
+        missing = DeploymentDependencyInspector().find_missing(
+            source_root=source_root,
+            manifest=HilDeploymentManifest(entries),
+        )
+
+        assert (
+            "src/midi_chip_platform/configuration.py",
+            "src/midi_chip_platform/ports.py",
+        ) in missing
+
+
+class TestCircuitPythonLibraryManifest:
+    def test_requirements_file_matches_default_device_libraries(self) -> None:
+        source_root = Path(__file__).resolve().parents[1]
+        requirement_lines = tuple(
+            line.strip()
+            for line in (source_root / "device" / "requirements.txt").read_text(
+                encoding="utf-8"
+            ).splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        )
+
+        assert requirement_lines == CircuitPythonLibraryManifest.default().library_names
+
+    def test_missing_device_library_is_reported(self, tmp_path) -> None:
+        missing = CircuitPythonLibraryManifest.default().find_missing(tmp_path)
+
+        assert missing == ("adafruit_midi",)
+
+    def test_directory_device_library_satisfies_manifest(self, tmp_path) -> None:
+        (tmp_path / "lib" / "adafruit_midi").mkdir(parents=True)
+
+        missing = CircuitPythonLibraryManifest.default().find_missing(tmp_path)
+
+        assert missing == ()
+
+
+class TestHardwareInLoopDeployer:
+    class FakeAutoreloadSession:
+        def __init__(self):
+            self.calls = []
+
+        def disable(self):
+            self.calls.append("disable")
+
+        def enable(self):
+            self.calls.append("enable")
+
+        def close(self):
+            self.calls.append("close")
+
+    class FakeAutoreloadController:
+        def __init__(self, session):
+            self._session = session
+            self.received_port = None
+
+        def open(self, serial_port):
+            self.received_port = serial_port
+            return self._session
+
+    def test_deploy_copies_manifest_and_preserves_unrelated_files(self, tmp_path) -> None:
+        source_root = tmp_path / "source"
+        device_root = tmp_path / "device"
+        manifest = HilDeploymentManifest(
+            (
+                ("device/boot.py", "boot.py"),
+                ("device/code.py", "code.py"),
+            )
+        )
+        (source_root / "device").mkdir(parents=True)
+        (source_root / "device" / "boot.py").write_text("boot", encoding="utf-8")
+        (source_root / "device" / "code.py").write_text("code", encoding="utf-8")
+        device_root.mkdir()
+        (device_root / "keep.txt").write_text("preserve", encoding="utf-8")
+        output = StringIO()
+
+        deployed = HardwareInLoopDeployer(
+            source_root=source_root,
+            device_root=device_root,
+            manifest=manifest,
+            output=output,
+        ).deploy()
+
+        assert deployed is True
+        assert (device_root / "boot.py").read_text(encoding="utf-8") == "boot"
+        assert (device_root / "code.py").read_text(encoding="utf-8") == "code"
+        assert (device_root / "keep.txt").read_text(encoding="utf-8") == "preserve"
+        assert "HIL_DEPLOY_STATUS=PASS;files=2" in output.getvalue()
+        assert str(device_root) not in output.getvalue()
+
+    def test_deploy_refuses_missing_source_without_partial_copy(self, tmp_path) -> None:
+        source_root = tmp_path / "source"
+        device_root = tmp_path / "device"
+        manifest = HilDeploymentManifest(
+            (
+                ("device/boot.py", "boot.py"),
+                ("device/code.py", "code.py"),
+            )
+        )
+        (source_root / "device").mkdir(parents=True)
+        (source_root / "device" / "boot.py").write_text("boot", encoding="utf-8")
+        device_root.mkdir()
+        output = StringIO()
+
+        deployed = HardwareInLoopDeployer(
+            source_root=source_root,
+            device_root=device_root,
+            manifest=manifest,
+            output=output,
+        ).deploy()
+
+        assert deployed is False
+        assert not (device_root / "boot.py").exists()
+        assert "HIL_DEPLOY_STATUS=FAIL;reason=missing-source;files=1" in output.getvalue()
+
+    def test_deploy_refuses_manifest_with_missing_internal_import(self, tmp_path) -> None:
+        source_root = Path(__file__).resolve().parents[1]
+        device_root = tmp_path / "device"
+        device_root.mkdir()
+        entries = tuple(
+            entry
+            for entry in HilDeploymentManifest.default().entries
+            if entry[0] != "src/midi_chip_platform/ports.py"
+        )
+        output = StringIO()
+
+        deployed = HardwareInLoopDeployer(
+            source_root=source_root,
+            device_root=device_root,
+            manifest=HilDeploymentManifest(entries),
+            output=output,
+        ).deploy()
+
+        assert deployed is False
+        assert "HIL_DEPLOY_STATUS=FAIL;reason=manifest-open" in output.getvalue()
+
+    def test_deploy_suspends_and_restores_autoreload(self, tmp_path) -> None:
+        source_root = tmp_path / "source"
+        device_root = tmp_path / "device"
+        manifest = HilDeploymentManifest((("device/code.py", "code.py"),))
+        (source_root / "device").mkdir(parents=True)
+        (source_root / "device" / "code.py").write_text("code", encoding="utf-8")
+        device_root.mkdir()
+        session = self.FakeAutoreloadSession()
+        controller = self.FakeAutoreloadController(session)
+
+        deployed = HardwareInLoopDeployer(
+            source_root=source_root,
+            device_root=device_root,
+            manifest=manifest,
+            serial_port="private-port-id",
+            autoreload_controller=controller,
+        ).deploy()
+
+        assert deployed is True
+        assert controller.received_port == "private-port-id"
+        assert session.calls == ["disable", "enable", "close"]
+
 
 class TestHardwareInLoopVerifier:
     class FakeSerialProbe:
@@ -81,17 +270,19 @@ class TestHardwareInLoopVerifier:
             device_path.parent.mkdir(parents=True, exist_ok=True)
             source_path.write_bytes(source_relative.encode("ascii"))
             device_path.write_bytes(source_relative.encode("ascii"))
+        (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.11.0 | story=MCP-US-010 | "
+            "circuitpython-midi-chip-platform v0.11.1 | story=MCP-US-051-IMP-001 | "
             "release-date=2026-07-15\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.11.0 | story=MCP-US-010 | "
-            "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
+            "circuitpython-midi-chip-platform v0.11.1 | story=MCP-US-051-IMP-001 | "
+            "release-date=2026-07-15\nDEVICE_IMPORT_STATUS=PASS\n"
+            "DEVICE_EXECUTION_STATUS=READY"
         )
         verifier = HardwareInLoopVerifier(
             source_root=source_root,
@@ -106,6 +297,7 @@ class TestHardwareInLoopVerifier:
         assert serial_probe.received_port == "private-port-id"
         assert "connection: PASS" in output.getvalue()
         assert "deployment: PASS" in output.getvalue()
+        assert "device-libraries: PASS" in output.getvalue()
         assert "execution: PASS" in output.getvalue()
         assert "private-port-id" not in output.getvalue()
 
@@ -130,6 +322,34 @@ class TestHardwareInLoopVerifier:
             serial_probe=self.FakeSerialProbe(
                 "circuitpython-midi-chip-platform v0.4.0 | story=MCP-US-004 | "
                 "release-date=2026-07-14\nDEVICE_EXECUTION_STATUS=READY"
+            ),
+            output=StringIO(),
+        )
+
+        assert verifier.run() is False
+
+    def test_execution_without_import_marker_fails(self, tmp_path) -> None:
+        source_root = tmp_path / "source"
+        device_root = tmp_path / "device"
+        manifest = HilDeploymentManifest((("device/boot.py", "boot.py"),))
+        (source_root / "device").mkdir(parents=True)
+        device_root.mkdir(parents=True)
+        (source_root / "device" / "boot.py").write_bytes(b"approved")
+        (device_root / "boot.py").write_bytes(b"approved")
+        (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
+        (device_root / "boot_out.txt").write_text(
+            "circuitpython-midi-chip-platform v0.11.1 | story=MCP-US-051-IMP-001 | "
+            "release-date=2026-07-15\nBOOT_STATUS=PASS",
+            encoding="utf-8",
+        )
+        verifier = HardwareInLoopVerifier(
+            source_root=source_root,
+            device_root=device_root,
+            serial_port="redacted",
+            manifest=manifest,
+            serial_probe=self.FakeSerialProbe(
+                "circuitpython-midi-chip-platform v0.11.1 | story=MCP-US-051-IMP-001 | "
+                "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),
         )
@@ -189,4 +409,47 @@ class TestSerialExecutionProbe:
 
         assert "DEVICE_EXECUTION_STATUS=READY" in capture
         assert b"\x04" in connection.writes
+        assert connection.closed is True
+
+
+class TestSerialHardResetProbe:
+    class FakeConnection:
+        def __init__(self):
+            self.writes = []
+            self.closed = False
+
+        def write(self, payload):
+            self.writes.append(payload)
+
+        def flush(self):
+            return None
+
+        def close(self):
+            self.closed = True
+
+    class FakeFactory:
+        def __init__(self, connection):
+            self._connection = connection
+
+        def open(self, serial_port, baudrate, timeout):
+            assert serial_port == "private-port-id"
+            assert baudrate == 115200
+            assert timeout == 0.1
+            return self._connection
+
+    class NoSleep:
+        def sleep(self, seconds):
+            return None
+
+    def test_probe_interrupts_repl_and_requests_hard_reset(self) -> None:
+        connection = self.FakeConnection()
+        probe = SerialHardResetProbe(
+            serial_factory=self.FakeFactory(connection),
+            sleeper=self.NoSleep(),
+        )
+
+        probe.reset("private-port-id")
+
+        assert b"\x03\x03\r\n" in connection.writes
+        assert b"import microcontroller; microcontroller.reset()\r\n" in connection.writes
         assert connection.closed is True

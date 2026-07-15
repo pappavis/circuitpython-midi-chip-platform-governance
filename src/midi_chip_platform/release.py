@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.11.0
+# Versienommer: 0.11.1
 # Doel: Besit en formateer gedeelde host- en toestel-release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
-# Actienr: MCP-ACT-010-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
+# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+# Actienr: MCP-ACT-051-IMP-001-GREEN-005
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.11.0",
-        user_story="MCP-US-010",
+        version="0.11.1",
+        user_story="MCP-US-051-IMP-001",
         release_date="2026-07-15",
     ):
         self._version = str(version)

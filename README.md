@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.11.0**. Draagbare events, 'n generiese USB-MIDI receive-loop, veilige BLE-capability gating, kanaalroetering, note-off-semantiek en per-kanaal pitch bend/CC1-toestand is host-groen. Die Lolin S2 se BLE-negatiewe pad is korrek; positiewe BLE-HIL wag op 'n werklike BLE-bord. MCP-US-005/007 se fisiese deploy wag steeds op herstel van die leesalleen `CIRCUITPY`-media. Daar is nog geen synth core en geen geaktiveerde klank-, MIDI-receive-, BLE- of Wi-Fi-diens op die toestel nie.
+Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.11.1**. Draagbare events, USB-MIDI receive-loop, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Die Wemos S2 het die dependency-geslote HIL geslaag: autoreload-safe 16-lêer deploy, `adafruit_midi`, harde boot, clean imports en execution. USB Note On/Off bly die volgende menslike stimulus; daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie.
 
 ## Begin hier
 
@@ -60,7 +60,9 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Outonome MIDI-batch hostaanvaarding en toestelverbinding](docs/autonomous_midi_batch_host_acceptance_v0.1.0.md)
 - [Sprint 1 lessons learned - checkpoint 001](docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0.md)
 - [Sprint 2 lessons learned - checkpoint 001](docs/lessons_learned_sprint_2_checkpoint_001_v0.1.0.md)
+- [Sprint 2 lessons learned - dependency-closed deployment](docs/lessons_learned_sprint_2_checkpoint_002_v0.1.0.md)
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
+- [MCP-US-051/007 dependency-closed deployment-impediment](docs/mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)
 - [BLE-MIDI en synth-core-prioriteit](docs/ble_midi_core_priority_amendment_v0.1.0.md)

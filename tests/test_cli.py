@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.12.0
-# Doel: Toets host-diagnose, HIL-CLI en gedeelde release-naspeurbaarheid.
+# Versienommer: 0.12.1
+# Doel: Toets host-diagnose, dependency-closed HIL-CLI en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
-# Actienr: MCP-ACT-010-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
+# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+# Actienr: MCP-ACT-051-IMP-001-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 
 from io import StringIO
 from pathlib import Path
@@ -16,6 +16,22 @@ from midi_chip_platform.release import ReleaseMetadata
 
 
 class TestCommandLineApplication:
+    class FakeDeployer:
+        def __init__(self, passed):
+            self._passed = passed
+
+        def deploy(self):
+            return self._passed
+
+    class FakeDeployerFactory:
+        def __init__(self, passed=True):
+            self._passed = passed
+            self.arguments = None
+
+        def create(self, source_root, device_root, serial_port, output):
+            self.arguments = (source_root, device_root, serial_port, output)
+            return TestCommandLineApplication.FakeDeployer(self._passed)
+
     class FakeVerifier:
         def __init__(self, passed):
             self._passed = passed
@@ -32,6 +48,13 @@ class TestCommandLineApplication:
             self.arguments = (source_root, device_root, serial_port, output)
             return TestCommandLineApplication.FakeVerifier(self._passed)
 
+    class FakeResetProbe:
+        def __init__(self):
+            self.received_port = None
+
+        def reset(self, serial_port):
+            self.received_port = serial_port
+
     def test_runtime_version_matches_package_version(self) -> None:
         project_path = Path(__file__).parents[1] / "pyproject.toml"
         project_data = tomllib.loads(project_path.read_text(encoding="utf-8"))
@@ -46,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.11.0 | "
-            "story=MCP-US-010 | release-date=2026-07-15\n"
+            "circuitpython-midi-chip-platform v0.11.1 | "
+            "story=MCP-US-051-IMP-001 | release-date=2026-07-15\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -127,4 +150,44 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert factory.arguments[:3] == ("source-root", "device-root", "private-port-id")
+        assert "private-port-id" not in output.getvalue()
+
+    def test_hil_deploy_delegates_paths_without_echoing_them(self) -> None:
+        output = StringIO()
+        factory = self.FakeDeployerFactory()
+        application = CommandLineApplication(output=output, hil_deployer_factory=factory)
+
+        exit_code = application.run(
+            (
+                "hil-deploy",
+                "--source-root",
+                "source-root",
+                "--device-root",
+                "private-device-root",
+                "--serial-port",
+                "private-port-id",
+            )
+        )
+
+        assert exit_code == 0
+        assert factory.arguments[:3] == (
+            "source-root",
+            "private-device-root",
+            "private-port-id",
+        )
+        assert "private-device-root" not in output.getvalue()
+        assert "private-port-id" not in output.getvalue()
+
+    def test_hil_reset_uses_serial_without_echoing_private_port(self) -> None:
+        output = StringIO()
+        reset_probe = self.FakeResetProbe()
+        application = CommandLineApplication(output=output, hil_reset_probe=reset_probe)
+
+        exit_code = application.run(
+            ("hil-reset", "--serial-port", "private-port-id")
+        )
+
+        assert exit_code == 0
+        assert reset_probe.received_port == "private-port-id"
+        assert "HIL_RESET_STATUS=REQUESTED" in output.getvalue()
         assert "private-port-id" not in output.getvalue()

@@ -1,30 +1,49 @@
 # Bestand: cli.py
-# Versienommer: 0.6.0
-# Doel: Bied IDE-onafhanklike host-, MIDI-control-, BLE- en HIL-diagnose.
+# Versienommer: 0.6.1
+# Doel: Bied IDE-onafhanklike diagnose en dependency-closed HIL-deploy/verifikasie.
 # Sprint: Sprint 2
-# Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
-# Actienr: MCP-ACT-010-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+# Actienr: MCP-ACT-051-IMP-001-GREEN-006
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 
 import argparse
 import sys
 
 from midi_chip_platform.ble_midi import BleMidiCapabilityGate, ImportModuleProbe
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
-from midi_chip_platform.hil import HardwareInLoopVerifierFactory
+from midi_chip_platform.hil import (
+    HardwareInLoopDeployerFactory,
+    HardwareInLoopVerifierFactory,
+    SerialHardResetProbe,
+)
 from midi_chip_platform.midi_performance import MidiPerformanceState
 from midi_chip_platform.release import ReleaseMetadata
 
 
 class CommandLineApplication:
-    def __init__(self, output=None, release_metadata=None, hil_verifier_factory=None):
+    def __init__(
+        self,
+        output=None,
+        release_metadata=None,
+        hil_verifier_factory=None,
+        hil_deployer_factory=None,
+        hil_reset_probe=None,
+    ):
         self._output = output if output is not None else sys.stdout
         self._release_metadata = release_metadata if release_metadata is not None else ReleaseMetadata()
         self._hil_verifier_factory = (
             hil_verifier_factory
             if hil_verifier_factory is not None
             else HardwareInLoopVerifierFactory()
+        )
+        self._hil_deployer_factory = (
+            hil_deployer_factory
+            if hil_deployer_factory is not None
+            else HardwareInLoopDeployerFactory()
+        )
+        self._hil_reset_probe = (
+            hil_reset_probe if hil_reset_probe is not None else SerialHardResetProbe()
         )
 
     def run(self, arguments=None):
@@ -41,6 +60,10 @@ class CommandLineApplication:
             return self._diagnose_performance(parsed)
         if parsed.command == "hil-verify":
             return self._hil_verify(parsed)
+        if parsed.command == "hil-deploy":
+            return self._hil_deploy(parsed)
+        if parsed.command == "hil-reset":
+            return self._hil_reset(parsed)
         parser.print_help(file=self._output)
         return 2
 
@@ -76,6 +99,18 @@ class CommandLineApplication:
         hil_parser.add_argument("--source-root", default=".")
         hil_parser.add_argument("--device-root", required=True)
         hil_parser.add_argument("--serial-port", required=True)
+        deploy_parser = subparsers.add_parser(
+            "hil-deploy",
+            help="copy the dependency-closed project manifest without deleting device files",
+        )
+        deploy_parser.add_argument("--source-root", default=".")
+        deploy_parser.add_argument("--device-root", required=True)
+        deploy_parser.add_argument("--serial-port", required=True)
+        reset_parser = subparsers.add_parser(
+            "hil-reset",
+            help="request a CircuitPython hard reset through the serial REPL",
+        )
+        reset_parser.add_argument("--serial-port", required=True)
         return parser
 
     def _diagnose(self):
@@ -118,6 +153,21 @@ class CommandLineApplication:
             output=self._output,
         )
         return 0 if verifier.run() else 1
+
+    def _hil_deploy(self, parsed):
+        deployer = self._hil_deployer_factory.create(
+            source_root=parsed.source_root,
+            device_root=parsed.device_root,
+            serial_port=parsed.serial_port,
+            output=self._output,
+        )
+        return 0 if deployer.deploy() else 1
+
+    def _hil_reset(self, parsed):
+        self._hil_reset_probe.reset(parsed.serial_port)
+        self._output.write("HIL_RESET_STATUS=REQUESTED\n")
+        self._output.write("private-identifiers: REDACTED\n")
+        return 0
 
     def _diagnose_ble(self, parsed):
         capability = BleMidiCapabilityGate().evaluate(

@@ -2,18 +2,18 @@
 
 <!--
 Bestand: mcp_us_005_configuration_secret_boundary_review_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Dokumenteer die publieke konfigurasie, private settings-grens, toetse en HIL-hek.
 Sprint: Sprint 1
 Epic: MCP-EPIC-001 Platform Foundation
 User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-REVIEW-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-IN-REVIEW
+Actienr: MCP-ACT-051-IMP-001-DOC-005
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 -->
 
 ## Status
 
-**IN REVIEW / HIL-HEK.** Die klasgebaseerde implementering, geheime-redaksie en host-regressie is groen. Toesteldeploy is veilig gestop omdat die fisiese `CIRCUITPY`-media leesalleen aangebied word. `diskutil verifyVolume` het geen FAT-fout gevind nie; geen reset, remount, herstel of formattering is onbewaak uitgevoer nie.
+**IN REVIEW / MENSLIKE KONFIGURASIEHEK.** Die klasgebaseerde implementering, geheime-redaksie en host-regressie is groen. Die 2026-07-15 dependency-closed deploy het bewys dat die volume skryfbaar is en dat die konfigurasielaag op die Wemos S2 sonder import-/runtimefout laai. Private `SET`/`UNSET`-aanvaarding bly oop.
 
 ## Konfigurasieprioriteit
 
@@ -38,15 +38,14 @@ Die huidige publieke klankprofiel is mono MAX98357A met IO5 BCLK, IO3 WS/LRC en 
 - RED: toetsinsameling het met die verwagte `ModuleNotFoundError` vir `midi_chip_platform.configuration` gefaal.
 - GREEN: 40 hosttoetse slaag op `v0.5.0`; AST- en importveiligheidsreëls bly groen.
 - Geheimekontrole: kunsmatige SSID- en wagwoordwaardes verskyn nie in `report_lines()` of publieke items nie.
-- Toestelpreflight: `CIRCUITPY` en CDC bestaan; die volume rapporteer media-leesalleen en die deploy het voor enige verandering gefaal.
+- Toestelherbewys: CIRCUITPY/CDC, manifest, libraries, boot, config-import en execution het geslaag; private waardes is nie gepubliseer nie.
 
 ## Menslike aanvaardingshek
 
 1. Maak Thonny en enige serial monitor toe.
-2. Ontkoppel die bord se USB-kabel, wag vyf sekondes en koppel dit weer sonder BOOT.
-3. Bevestig dat Finder na `CIRCUITPY` kan skryf deur 'n onskadelike nuwe tekslêer te skep en weer te verwyder.
-4. Indien die volume steeds leesalleen is, stop en deel die resultaat; moenie formatteer of `storage.erase_filesystem()` uitvoer nie.
-5. Ná 'n skryfbare mount deploy die US-005-manifest en bevestig `CONFIGURATION_STATUS=PASS` plus private `SET`/`UNSET`-status sonder waardes.
+2. Stel slegs veilige toetswaardes in 'n private `settings.toml`; commit dit nooit.
+3. Hard-reset en bevestig dat diagnostiek slegs private `SET`/`UNSET`-status toon, nooit waardes nie.
+4. Verwyder die toetswaardes en bevestig dat publieke verstekke terugkeer.
 
 ## Virtuele spanreview
 

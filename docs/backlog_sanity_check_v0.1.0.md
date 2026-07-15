@@ -2,18 +2,18 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: WIFI-RUNTIME-AMENDMENT-001
-Actienr: MCP-ACT-WIFI-AMEND-SANITY-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
+User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+Actienr: MCP-ACT-051-IMP-001-SANITY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 -->
 
 ## Resultaat
 
-Status: **PASS ná Wi-Fi station/AP-fallback- en mobile-web-amendment**.
+Status: **PASS ná dependency-closed deployment-amendment**.
 
 | Kontrole | Resultaat |
 |---|---|
@@ -64,7 +64,7 @@ Status: **PASS ná Wi-Fi station/AP-fallback- en mobile-web-amendment**.
 
 - MCP-US-002 is ná menslike installasie-, diagnose- en toetsbewys `Done`.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
-- MCP-US-051 is die enigste `In Progress` story; connection/deploy/execution word nou geoutomatiseer en klankmeting sluit ná US-015 aan.
+- MCP-US-051 en MCP-US-007 bly `In Review`: dependency-closure, device libraries, boot en clean import/execution is fisies groen; USB Note On/Off en klankmeting bly aparte hekke.
 - Die eerste hoorbare volgorde is US-003, US-004, US-014 en US-016; PWM US-015 bly fallback.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.
 - Fishman, MAX98357 en penname is verwysings-/profieldata, nie universele kodekonstantes nie.
@@ -74,6 +74,7 @@ Status: **PASS ná Wi-Fi station/AP-fallback- en mobile-web-amendment**.
 - Vier onafhanklike macOS crashrapporte wys dieselfde `python-rtmidi`/CoreMIDI-abort; R-024 hou hierdie hosttooling-impediment weg van firmwareclaims.
 - US-023 besit die begrensde station-join en beveiligde AP-fallback; US-024 besit mobile-first UI en spaarsame logging; US-027 besit credentials, sessielimiete en recovery.
 - Geen nuwe story-ID is geskep nie omdat hierdie gedrag binne EPIC-004 se bestaande Wi-Fi-, web- en sekuriteitsgrense val.
+- Geen nuwe story-ID was vir die deployherstel nodig nie; dit sluit MCP-US-051 se HIL-kontrak en MCP-US-007 se fisiese uitvoerbaarheidshek.
 
 ## Governance-gap wat nou gesluit is
 

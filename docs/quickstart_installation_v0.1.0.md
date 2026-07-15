@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.7.0
+Versienommer: 0.8.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-010 Pitch Bend And CC1 Modulation
-Actienr: MCP-ACT-010-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-010
+User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+Actienr: MCP-ACT-051-IMP-001-DOC-003
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek en per-kanaal pitch bend/CC1-toestand. Dit maak nog geen klank en ontvang nog geen fisiese note in die gedeployde firmware nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
+Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek en per-kanaal pitch bend/CC1-toestand. Dit maak nog geen klank nie. Hosttoetse bewys die klasse; `hil-deploy` kopieer 'n dependency-geslote manifest en `hil-verify` bewys verbinding, libraries, boot, clean imports en uitvoering op die bord.
 
 ## Wat jy nodig het
 
@@ -74,7 +74,7 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.11.0 | story=MCP-US-010 | release-date=2026-07-15
+circuitpython-midi-chip-platform v0.11.1 | story=MCP-US-051-IMP-001 | release-date=2026-07-15
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
@@ -124,8 +124,8 @@ Die goedgekeurde HIL-proses:
 1. Ontdek CIRCUITPY en die USB-seriële poort.
 2. Maak Thonny/Serial Monitor toe sodat net een client die poort besit.
 3. Neem 'n private herstelkopie buite die repository.
-4. Kopieer `device/boot.py` en `device/code.py` na die CIRCUITPY-wortel.
-5. Kopieer slegs die vereiste package-lêers na `CIRCUITPY/lib/midi_chip_platform/`.
+4. Installeer die verklaarde CircuitPython-biblioteke met CircUp.
+5. Gebruik `hil-deploy` om die 16 dependency-geslote projeklêers te kopieer.
 6. Wag totdat writes klaar is en voer 'n harde reset/power cycle uit sodat `boot.py` weer loop.
 7. Kontroleer `boot_out.txt`, USB-MIDI-enumerasie en die runtimebanner.
 
@@ -159,10 +159,18 @@ Get-Volume
 Vervang `<CIRCUITPY-PAD>` en `<SERIAL-POORT>` met die ontdekte waardes:
 
 ```bash
+python -m pip install circup
+circup --path <CIRCUITPY-PAD> install -r device/requirements.txt
+python -m midi_chip_platform hil-deploy --source-root . --device-root <CIRCUITPY-PAD> --serial-port <SERIAL-POORT>
+python -m midi_chip_platform hil-reset --serial-port <SERIAL-POORT>
 python -m midi_chip_platform hil-verify --source-root . --device-root <CIRCUITPY-PAD> --serial-port <SERIAL-POORT>
 ```
 
-Sukses wys vier PASS-reëls vir connection, deployment, boot en execution, plus `private-identifiers: REDACTED`. Die runner eggo nie die private serial-poort nie. Die klankmetingsdeel van MCP-US-051 word eers bygevoeg nadat US-015/016 die fisiese PWM/MAX98357-pad lewer.
+CircUp installeer `adafruit_midi` uit `device/requirements.txt`; sien die amptelike [CircUp-dokumentasie](https://docs.circuitpython.org/projects/circup/en/latest/) en [Adafruit MIDI-dokumentasie](https://docs.circuitpython.org/projects/midi/en/latest/). Geen plaaslike volume-, toestel- of virtualenv-pad is in die kode vasgeskryf nie.
+
+`hil-deploy` hou dieselfde serial-sessie oop om CircuitPython auto-reload tydelik af te skakel en herstel dit ook wanneer 'n kopiefout plaasvind. `hil-reset` voer daarna 'n harde boot uit sodat `boot.py` en `boot_out.txt` by die nuwe release pas.
+
+Sukses wys `HIL_DEPLOY_STATUS=PASS;files=16`, `HIL_RESET_STATUS=REQUESTED`, gevolg deur PASS-reëls vir connection, manifest-closure, deployment, device-libraries, boot en execution, plus `private-identifiers: REDACTED`. Execution vereis `DEVICE_IMPORT_STATUS=PASS` voordat die runtime READY is. Die klankmetingsdeel van MCP-US-051 word eers bygevoeg nadat US-015/016 die fisiese PWM/MAX98357-pad lewer.
 
 ## VS Code
 
@@ -235,6 +243,20 @@ Kontroleer dat CircuitPython gemonteer is, probeer 'n data-geskikte USB-kabel en
 
 Maak Thonny en serial monitors toe, ontkoppel USB, wag vyf sekondes en koppel weer sonder BOOT. Toets daarna met 'n nuwe onskadelike tekslêer. Indien dit steeds leesalleen is, stop: moenie formatteer, `storage.erase_filesystem()` gebruik of concurrent-write-beskerming afskakel nie. Deel die mount- en `boot_out.txt`-resultaat vir 'n beheerde herstelplan.
 
+**`device-libraries: FAIL - missing: adafruit_midi`**
+
+Maak seker dat die bord as `CIRCUITPY` gemonteer is en voer weer uit:
+
+```bash
+circup --path <CIRCUITPY-PAD> install -r device/requirements.txt
+```
+
+Moenie 'n host-Python `pip install adafruit-circuitpython-midi` as bewys gebruik nie; die library moet op die CircuitPython-volume se `lib/`-pad wees.
+
+**`execution: FAIL` ná 'n suksesvolle deploy**
+
+Maak Thonny en ander serial-kliënte toe, power-cycle die bord en voer `hil-verify` weer uit. Indien `DEVICE_IMPORT_STATUS=PASS` ontbreek, deel die gesaniteerde traceback; moenie READY handmatig byvoeg om die hek te omseil nie.
+
 ## Opsionele plaaslike Ollama
 
 Ollama is nie nodig vir installasie, toetse, firmware of uitvoering nie. Dit mag later slegs vir 'n goedgekeurde klein ontwikkeltaak gebruik word. Voor gebruik moet die model met `ollama list` bevestig en met 'n klein tydbegrensde proef getoets word. Die verstek bly `default`; indien die Mac stadig word, stop die plaaslike model en gebruik die verstek-Codex/LLM-pad.
@@ -251,4 +273,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-008 en MCP-US-009 is host-Done. MCP-US-005 en MCP-US-007 wag op die menslike toestel-deploy nadat die leesalleen `CIRCUITPY`-media herstel is. MCP-US-062 se positiewe BLE-HIL wag op 'n werklike BLE-geskikte tweede bord. MCP-US-010 se per-kanaal bend/CC1-toestand is host-groen; sy hoorbare aanvaarding wag op MCP-US-016 se MAX98357-I2S-pad en MCP-US-063 se D1-kern. Dit is die doelbewuste pausepunt voordat enige hoorbare resultaat beweer word.
+MCP-US-008 en MCP-US-009 is host-Done. MCP-US-007/051 se dependency-closed deploy, harde boot en import-proof is fisies groen; USB-MIDI Note On/Off en die latere klankprobe bly oop. MCP-US-062 se positiewe BLE-HIL wag op 'n werklike BLE-geskikte tweede bord. MCP-US-010 se hoorbare aanvaarding wag op MCP-US-016 se MAX98357-I2S-pad en MCP-US-063 se D1-kern.

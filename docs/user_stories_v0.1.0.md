@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.14.0
+Versienommer: 0.15.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-006, MCP-US-007, MCP-US-062, MCP-US-010
-Actienr: MCP-ACT-SP2-ACCEPTANCE-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUTONOMOUS-MIDI-BATCH-HOST-ACCEPTED
+User-Story: MCP-US-007, MCP-US-051
+Actienr: MCP-ACT-051-IMP-001-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 -->
 
 ## Statuslegende
@@ -31,14 +31,14 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | Done | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
 | MCP-US-004 | Board Capability Discovery | Done | US-002 | Profiel, IO3/5/7, modules, geheue en I2S-backend is fisies gerapporteer; power-cycle recovery en volledige manifest-HIL slaag |
-| MCP-US-005 | Configuration And Secret Boundary | In Review | US-003 | Hostlektoetse en prioriteit is groen; fisiese deploy wag op herstel van leesalleen CIRCUITPY-media |
+| MCP-US-005 | Configuration And Secret Boundary | In Review | US-003 | Hostlektoetse is groen en die konfigurasielaag laai fisies; menslike private SET/UNSET-aanvaarding bly oop |
 
 ## MCP-EPIC-002 MIDI And Clock
 
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-006 | Portable NoteEvent And ControlEvent Model | Done | US-002 | Product Owner het die draagbare Note/CC/bend/clock-model binne die volledige 68-hosttoetsstel aanvaar |
-| MCP-US-007 | USB MIDI Receive Loop | In Review (host accepted) | US-003, US-006 | Generiese vertaling en receive-loop is aanvaar; fisiese Note On/Off wag op gemonteerde toestelvolume en deploy |
+| MCP-US-007 | USB MIDI Receive Loop | In Review (host accepted) | US-003, US-006 | Dependency-closed device deploy/import is fisies groen; werklike USB-MIDI Note On/Off-HIL bly oop |
 | MCP-US-062 | BLE MIDI Transport And Capability Gate | Impediment (S2 negative accepted) | US-006, US-007, US-052 | S2 se veilige negatiewe gate is aanvaar; positiewe BLE-HIL wag op 'n werklike BLE-bord |
 | MCP-US-008 | MIDI Channel Router | Done | US-007 | Kanaal 1-16 roeteer na konfigureerbare kerninstansies; clock en onbekende kanale bly veilig ongebonde |
 | MCP-US-009 | Velocity And Note-Off Semantics | Done | US-007 | Velocity nul, Note Off, CC120 en CC123 sluit aktiewe note per kanaal deterministies |
@@ -116,7 +116,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-050 | Host Simulator And Contract Tests | MVP | US-002, US-006 | Kern/MIDI/clock-toetse loop op macOS, Windows en Linux sonder bord |
-| MCP-US-051 | Hardware-In-The-Loop Test Runner | In Review | US-003, US-015 | Connection/deploy/execution-runner is groen; USB-MIDI is bewys en die klankmeetadapter volg ná US-015/016 |
+| MCP-US-051 | Hardware-In-The-Loop Test Runner | In Review | US-003, US-015 | Autoreload-safe deploy, closure, libraries, boot en import/execution is fisies groen; klankadapter bly oop tot US-015/016 |
 | MCP-US-052 | Cross-Board Capability Profiles | MVP | US-004 | ’n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via ’n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | MVP | US-003, US-007 | Toestel verskyn en ontvang note op ’n skoon Windows-rekenaar |

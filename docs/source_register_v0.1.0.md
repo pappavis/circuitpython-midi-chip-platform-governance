@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.8.0
+Versienommer: 0.9.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
-Actienr: MCP-ACT-006-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
+User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+Actienr: MCP-ACT-051-IMP-001-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 -->
 
 ## Primêre tegniese bronne
@@ -16,7 +16,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
 | Bron | Gebruik | Vertroue/beperking |
 |---|---|---|
 | [CircuitPython `usb_midi`](https://docs.circuitpython.org/en/latest/shared-bindings/usb_midi/) | USB-MIDI enable/disable, poorte, name en ESP32-S2 endpointwaarskuwing | Primêre amptelike API; firmwareweergawe moet tydens implementering bevestig word |
-| [CircuitPython `supervisor`](https://docs.circuitpython.org/en/latest/shared-bindings/supervisor/) | USB-identiteit, run reason, safe-mode-rede en runtime-status | Omitted VID/PID behou bordverstekke; USB-wysiging gebeur slegs in `boot.py` |
+| [CircuitPython `supervisor`](https://docs.circuitpython.org/en/latest/shared-bindings/supervisor/) | USB-identiteit, run reason, runtime-status, skryfbare `runtime.autoreload` en harde reload-grens | Omitted VID/PID behou bordverstekke; deploy herstel auto-reload ook by fout |
+| [CircUp](https://docs.circuitpython.org/projects/circup/en/latest/) | Requirements-gebaseerde CircuitPython library-installering en bord-/bundle-diagnose | Primêre amptelike tool; werklike library-teenwoordigheid en imports bly HIL-hekke |
 | [CircuitPython USB customization](https://learn.adafruit.com/customizing-usb-devices-in-circuitpython?view=all) | Bootvolgorde, `boot_out.txt`, endpointbegroting en recovery | ESP32-S2 het 'n beperkte endpointbegroting; HIL bly verpligtend |
 | [CircuitPython `audiobusio.I2SOut`](https://docs.circuitpython.org/en/stable/shared-bindings/audiobusio/) | I2S-penkontrak en sample-uitvoer | Primêre amptelike API; beskikbaarheid is bordbou-afhanklik |
 | [WEMOS S2 Mini](https://docs.wemos.cc/en/latest/s2/s2_mini.html) | Verwysingsbord, 3.3 V-logika, 27 I/O, 4 MB flash en 2 MB PSRAM | Amptelike bordbron; runtime/HIL bevestig werklike aliasse en modules |

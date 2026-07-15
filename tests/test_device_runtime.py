@@ -1,17 +1,25 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.3.0
-# Doel: Spesifiseer toestel-uitvoer- en capability-bewys sonder diensaktivering.
-# Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-RED-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+# Versienommer: 0.11.1
+# Doel: Spesifiseer toestel-uitvoer, capability- en dependency-importbewys sonder diensaktivering.
+# Sprint: Sprint 2
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
+# Actienr: MCP-ACT-051-IMP-001-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 
-from midi_chip_platform.device_runtime import DeviceRuntimeApplication
+from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
 
 
 class TestDeviceRuntimeApplication:
+    class FakeImporter:
+        def __init__(self):
+            self.module_names = []
+
+        def __call__(self, module_name):
+            self.module_names.append(module_name)
+            return object()
+
     class FakeSnapshot:
         def report_lines(self):
             return (
@@ -51,6 +59,39 @@ class TestDeviceRuntimeApplication:
         assert output == [
             "circuitpython-midi-chip-platform v0.2.0 | "
             "story=MCP-US-003 | release-date=2026-07-14",
+            "DEVICE_EXECUTION_STATUS=READY",
+        ]
+
+    def test_runtime_reports_device_import_smoke_proof_before_ready(self) -> None:
+        output = []
+        importer = self.FakeImporter()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.11.1",
+                user_story="MCP-US-051-IMP-001",
+                release_date="2026-07-15",
+            ),
+            import_smoke_check=DeviceImportSmokeCheck(
+                importer=importer,
+                module_names=(
+                    "adafruit_midi",
+                    "midi_chip_platform.routing",
+                ),
+            ),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert importer.module_names == [
+            "adafruit_midi",
+            "midi_chip_platform.routing",
+        ]
+        assert output == [
+            "circuitpython-midi-chip-platform v0.11.1 | "
+            "story=MCP-US-051-IMP-001 | release-date=2026-07-15",
+            "DEVICE_IMPORT_STATUS=PASS",
             "DEVICE_EXECUTION_STATUS=READY",
         ]
 
