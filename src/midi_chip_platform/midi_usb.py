@@ -1,11 +1,11 @@
 # Bestand: midi_usb.py
-# Versienommer: 0.1.0
-# Doel: Vertaal en ontvang USB-MIDI sonder hardgekodeerde toestelle of import-newe-effekte.
+# Versienommer: 0.2.0
+# Doel: Vertaal, normaliseer en ontvang USB-MIDI sonder toestelkonstantes of import-newe-effekte.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-009 Velocity And Note-Off Semantics
+# Actienr: MCP-ACT-009-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
 
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.ports import MidiInputPort
@@ -184,11 +184,12 @@ class CircuitPythonUsbMidiFactory:
 
 
 class MidiReceiveLoop:
-    def __init__(self, midi_input, event_consumer):
+    def __init__(self, midi_input, event_consumer, event_processor=None):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
         self._midi_input = midi_input
         self._event_consumer = event_consumer
+        self._event_processor = event_processor
         self._received_count = 0
 
     @property
@@ -199,6 +200,10 @@ class MidiReceiveLoop:
         event = self._midi_input.receive()
         if event is None:
             return False
-        self._event_consumer(event)
+        events = (event,)
+        if self._event_processor is not None:
+            events = self._event_processor.process(event)
+        for processed_event in events:
+            self._event_consumer(processed_event)
         self._received_count += 1
         return True

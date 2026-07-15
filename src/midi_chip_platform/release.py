@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.9.0
+# Versienommer: 0.10.0
 # Doel: Besit en formateer gedeelde host- en toestel-release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-008 MIDI Channel Router
-# Actienr: MCP-ACT-008-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-008
+# User-Story: MCP-US-009 Velocity And Note-Off Semantics
+# Actienr: MCP-ACT-009-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.9.0",
-        user_story="MCP-US-008",
+        version="0.10.0",
+        user_story="MCP-US-009",
         release_date="2026-07-15",
     ):
         self._version = str(version)

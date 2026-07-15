@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.7.0
+# Versienommer: 0.8.0
 # Doel: Verifieer geredigeerde CircuitPython connection-, deploy-, boot- en execution-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-008 MIDI Channel Router
-# Actienr: MCP-ACT-008-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-008
+# User-Story: MCP-US-009 Velocity And Note-Off Semantics
+# Actienr: MCP-ACT-009-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
 
 import hashlib
 from pathlib import Path
@@ -59,6 +59,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/routing.py",
                     "lib/midi_chip_platform/routing.py",
+                ),
+                (
+                    "src/midi_chip_platform/midi_semantics.py",
+                    "lib/midi_chip_platform/midi_semantics.py",
                 ),
             )
         )

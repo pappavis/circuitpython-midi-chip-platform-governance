@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.11.0
+Versienommer: 0.12.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-008 MIDI Channel Router
-Actienr: MCP-ACT-008-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-008
+User-Story: MCP-US-009 Velocity And Note-Off Semantics
+Actienr: MCP-ACT-009-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
 -->
 
 ## Statuslegende
@@ -41,7 +41,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-007 | USB MIDI Receive Loop | In Review | US-003, US-006 | Generiese Adafruit-vertaling en begrensde receive-loop is host-groen; fisiese Note On/Off wag op toesteltoegang |
 | MCP-US-062 | BLE MIDI Transport And Capability Gate | Impediment (host ready) | US-006, US-007, US-052 | S2 se veilige negatiewe gate en gedeelde transportkontrak is groen; positiewe BLE-HIL wag op 'n werklike BLE-bord |
 | MCP-US-008 | MIDI Channel Router | Done | US-007 | Kanaal 1-16 roeteer na konfigureerbare kerninstansies; clock en onbekende kanale bly veilig ongebonde |
-| MCP-US-009 | Velocity And Note-Off Semantics | MVP | US-007 | Velocity nul sluit note; geen hangende stem ná All Notes Off nie |
+| MCP-US-009 | Velocity And Note-Off Semantics | Done | US-007 | Velocity nul, Note Off, CC120 en CC123 sluit aktiewe note per kanaal deterministies |
 | MCP-US-010 | Pitch Bend And CC1 Modulation | MVP | US-007 | Bend en vibrato word hoorbaar en diagnosties gemeet |
 | MCP-US-058 | Guitar MIDI Bend And Slide Event Semantics | MVP | US-008, US-010 | Multi-kanaal note en per-kanaal bends behou onafhanklike string/slide-semantiek met konfigureerbare bend range |
 | MCP-US-011 | Internal 120 BPM Clock | MVP | US-002 | Interne klok lewer stabiele 24 PPQN-afgeleides en BPM-metriek |
