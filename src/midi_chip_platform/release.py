@@ -1,19 +1,19 @@
 # Bestand: release.py
-# Versienommer: 0.12.2
-# Doel: Besit host- en toestel-release-naspeurbaarheid vir fisiese USB-MIDI-aanvaarding.
+# Versienommer: 0.12.3
+# Doel: Besit host- en toestel-release-naspeurbaarheid vir die US-005 herstel.
 # Sprint: Sprint 2
-# Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-005-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-005
+# Epic: MCP-EPIC-001 Platform Foundation
+# User-Story: MCP-US-005 Configuration And Secret Boundary
+# Actienr: MCP-ACT-005-IMP-001-REL-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.12.2",
-        user_story="MCP-US-007",
-        release_date="2026-07-15",
+        version="0.12.3",
+        user_story="MCP-US-005",
+        release_date="2026-07-16",
     ):
         self._version = str(version)
         self._user_story = str(user_story)

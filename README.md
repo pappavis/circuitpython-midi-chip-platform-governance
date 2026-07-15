@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.2**. MCP-US-007 is fisies aanvaar: Logic/CoreMIDI het USB-MIDI gestuur en die Wemos S2 het Note On, Note Off en 'n ooreenstemmende nootpaar as PASS gerapporteer. Draagbare events, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie; die volgende produkvertikale sny bly die AudioOutput-poort en hoorbare MAX98357 mono-I2S-diagnose.
+Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.3**. MCP-US-007 is fisies aanvaar: Logic/CoreMIDI het USB-MIDI gestuur en die Wemos S2 het Note On, Note Off en 'n ooreenstemmende nootpaar as PASS gerapporteer. MCP-US-005 se leë-private-setting-herstel is host-groen en wag op die finale Wemos-herbewys. Daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie; die volgende produkvertikale sny bly die AudioOutput-poort en hoorbare MAX98357 mono-I2S-diagnose.
 
 ## Begin hier
 
@@ -27,7 +27,7 @@ Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker via klawerbord of MID
 
 ## Webtoegang
 
-Die synth probeer tydens runtime ’n privaat gekonfigureerde Wi-Fi-netwerk join en rapporteer daarna sy station-IP. Indien die netwerk ontbreek of die begrensde join-poging misluk, begin die synth ’n beveiligde eie access point en rapporteer sy AP-IP. Die mobiele webblad werk in albei modusse, beperk die MVP tot een aktiewe kliënt en skryf geen logreël vir elke poll of UI-verversing nie. Wi-Fi begin nooit in `boot.py` nie.
+Die synth sal in MCP-US-023 tydens startup sy hostname, netwerkmodus en toepaslike IP rapporteer. Hy probeer eers 'n privaat gekonfigureerde Wi-Fi-netwerk; by afwesigheid of begrensde mislukking begin hy 'n beveiligde eie access point. Die mobiele webblad werk in albei modusse, beperk die MVP tot een aktiewe kliënt en skryf geen logreël vir elke poll of UI-verversing nie. Wi-Fi begin nooit in `boot.py` nie.
 
 ## Hoekom ’n skoon repository?
 
@@ -74,6 +74,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)
 - [BLE-MIDI en synth-core-prioriteit](docs/ble_midi_core_priority_amendment_v0.1.0.md)
 - [Wi-Fi station-, access-point- en mobiele webfallback](docs/wifi_runtime_fallback_amendment_v0.1.0.md)
+- [Post-MVP fisiese chip- en I2C-display-uitbreiding](docs/physical_chip_display_expansion_amendment_v0.1.0.md)
 - [Device Connection Proof](docs/device_connection_proof_v0.1.0.md)
 - [Repository-identiteit en sinkronisasiekontrak](docs/repository_identity_and_sync_v0.1.0.md)
 
@@ -93,6 +94,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - Bordvermoëns word ontdek; bordname, MIDI-toestelle en penne word nie as universele konstantes aanvaar nie.
 - MIDI, kernlogika, klankuitvoer en webbeheer word deur duidelike poorte geskei.
 - Die klankenjin bly vervangbaar: draagbare D1-basiskern eerste, SN76489 tweede, 6581 SID derde en OPL2/OPL3 daarna.
+- Ná MVP kan dieselfde kernkontrak 'n emuleerde of fisiese chipbackend kies; emulasie bly altyd verstek en veilige fallback.
 - BLE-MIDI is ’n MVP-vereiste, maar word capability-gated: die ESP32-S2 rapporteer dit veilig as nie-ondersteun; ’n BLE-geskikte tweede bord lewer die fisiese aanvaardingsbewys.
 - Wi-Fi-runtime gebruik ’n eksplisiete toestandmasjien: station join, begrensde mislukking, beveiligde AP-fallback en sigbare IP; logging is spaarsaam en koersbegrens.
 - Die span volg backlogvolgorde; side quests word georden en nie stilweg geimplementeer nie.

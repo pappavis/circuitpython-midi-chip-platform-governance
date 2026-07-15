@@ -2,18 +2,18 @@
 
 <!--
 Bestand: mcp_us_005_configuration_secret_boundary_review_v0.1.0.md
-Versienommer: 0.2.0
-Doel: Dokumenteer die publieke konfigurasie, private settings-grens, toetse en HIL-hek.
+Versienommer: 0.3.0
+Doel: Dokumenteer die private settings-grens, leewaarde-herstel en finale HIL-hek.
 Sprint: Sprint 1
 Epic: MCP-EPIC-001 Platform Foundation
 User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-051-IMP-001-DOC-005
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+Actienr: MCP-ACT-005-IMP-001-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 -->
 
 ## Status
 
-**IN REVIEW / MENSLIKE KONFIGURASIEHEK.** Die klasgebaseerde implementering, geheime-redaksie en host-regressie is groen. Die 2026-07-15 dependency-closed deploy het bewys dat die volume skryfbaar is en dat die konfigurasielaag op die Wemos S2 sonder import-/runtimefout laai. Private `SET`/`UNSET`-aanvaarding bly oop.
+**IN REVIEW / MENSLIKE KONFIGURASIEHEK.** Geheime-redaksie en host-regressie is groen. Die 2026-07-16 herstel normaliseer leë en whitespace-only waardes na afwesig voordat tipe-omskakeling of bronregistrasie plaasvind. Fisiese `UNSET -> SET -> UNSET`-herbewys bly die sluitingshek.
 
 ## Konfigurasieprioriteit
 
@@ -29,6 +29,7 @@ Die huidige publieke klankprofiel is mono MAX98357A met IO5 BCLK, IO3 WS/LRC en 
 
 - `wifi.ssid`, `wifi.password` en `web.ap.password` word as private sleutels behandel.
 - Diagnostiek rapporteer slegs `SET` of `UNSET`, nooit die waarde nie.
+- Leë strings en waardes wat net uit whitespace bestaan, tel as `UNSET`; nie-leë geheime behou hul presiese waarde intern.
 - `public_items()` sluit private sleutels en waardes uit.
 - `settings.toml` bly in `.gitignore`; `device/settings.toml.example` bevat slegs plekhouers.
 - Die ou prototipewagwoord bly 'n roteeraksie vir die Product Owner voordat Wi-Fi-stories begin.
@@ -39,13 +40,15 @@ Die huidige publieke klankprofiel is mono MAX98357A met IO5 BCLK, IO3 WS/LRC en 
 - GREEN: 40 hosttoetse slaag op `v0.5.0`; AST- en importveiligheidsreëls bly groen.
 - Geheimekontrole: kunsmatige SSID- en wagwoordwaardes verskyn nie in `report_lines()` of publieke items nie.
 - Toestelherbewys: CIRCUITPY/CDC, manifest, libraries, boot, config-import en execution het geslaag; private waardes is nie gepubliseer nie.
+- RED 2026-07-16: twee nuwe regressietoetse het gewys dat leë en whitespace-private waardes foutief in die snapshot beland.
+- GREEN 2026-07-16: die settings source normaliseer daardie waardes na `None`; 33 geteikende config/CLI/HIL-toetse en die volle stel van 91 hosttoetse slaag op v0.12.3.
 
 ## Menslike aanvaardingshek
 
 1. Maak Thonny en enige serial monitor toe.
-2. Stel slegs veilige toetswaardes in 'n private `settings.toml`; commit dit nooit.
-3. Hard-reset en bevestig dat diagnostiek slegs private `SET`/`UNSET`-status toon, nooit waardes nie.
-4. Verwyder die toetswaardes en bevestig dat publieke verstekke terugkeer.
+2. Laat die drie private waardes leeg of verwyder hul reëls; hard-reset en verwag drie keer `UNSET`.
+3. Stel slegs veilige dummy-toetswaardes; hard-reset en verwag die betrokke velde as `SET`, nooit die waardes nie.
+4. Verwyder die dummywaardes of maak hulle weer leeg; hard-reset en verwag weer `UNSET`.
 
 ## Virtuele spanreview
 

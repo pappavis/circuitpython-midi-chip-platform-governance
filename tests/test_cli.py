@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.12.2
-# Doel: Toets host-diagnose, dependency-closed HIL-CLI en release-naspeurbaarheid.
+# Versienommer: 0.12.3
+# Doel: Toets host-diagnose en US-005 release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-005-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-005
+# User-Story: MCP-US-005 Configuration And Secret Boundary
+# Actienr: MCP-ACT-005-IMP-001-TEST-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 
 from io import StringIO
 from pathlib import Path
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.12.2 | "
-            "story=MCP-US-007 | release-date=2026-07-15\n"
+            "circuitpython-midi-chip-platform v0.12.3 | "
+            "story=MCP-US-005 | release-date=2026-07-16\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.16.0
+Versienommer: 0.17.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-007, MCP-US-064 tot MCP-US-068
-Actienr: MCP-ACT-FWK-001-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
+User-Story: MCP-US-005, MCP-US-023, MCP-US-069 tot MCP-US-074
+Actienr: MCP-ACT-005-IMP-001-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 -->
 
 ## Statuslegende
@@ -31,7 +31,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | Done | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
 | MCP-US-004 | Board Capability Discovery | Done | US-002 | Profiel, IO3/5/7, modules, geheue en I2S-backend is fisies gerapporteer; power-cycle recovery en volledige manifest-HIL slaag |
-| MCP-US-005 | Configuration And Secret Boundary | In Review | US-003 | Hostlektoetse is groen en die konfigurasielaag laai fisies; menslike private SET/UNSET-aanvaarding bly oop |
+| MCP-US-005 | Configuration And Secret Boundary | In Review | US-003 | Hostlek- en leewaarde-toetse is groen; fisiese herbewys moet leë/whitespace private settings as `UNSET` rapporteer en ingevulde waardes slegs as `SET` |
 
 ## MCP-EPIC-002 MIDI And Clock
 
@@ -67,7 +67,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-022 | Cooperative Runtime Scheduler | MVP | US-007, US-014 | MIDI, klank en web-polling deel tyd sonder hoorbare blokkasie |
-| MCP-US-023 | Safe Wi-Fi Station And AP Fallback Service | MVP | US-005, US-022 | Runtime join ’n gekonfigureerde netwerk binne timeout en rapporteer station-IP; by mislukking begin ’n beveiligde AP en rapporteer AP-IP sonder MIDI-/klankblokkasie |
+| MCP-US-023 | Safe Wi-Fi Station And AP Fallback Service | MVP | US-005, US-022 | Startup rapporteer hostname, `station` plus station-IP, of veilige `ap-fallback` plus AP-IP; join/fallback is begrens, redigeer geheime en blokkeer nie MIDI/klank nie |
 | MCP-US-024 | Mobile-Friendly Local Web Status And Parameters | MVP | US-023 | Een mobiele plaaslike kliënt lees status en verander veilige parameters in station/AP-modus; polling/logging bly spaarsaam en koersbegrens |
 | MCP-US-025 | Browser Virtual MIDI Keyboard | MVP | US-024 | Klik/touch stuur note via dieselfde event-model |
 | MCP-US-026 | Simple Step Sequencer | MVP | US-011, US-024 | ’n Kort patroon kan teen interne/eksterne klok loop en stop |
@@ -138,6 +138,19 @@ Hierdie epic beheer hoe mense en agente projekkennis laai, besluite neem en bewy
 | MCP-US-066 | Quality Manual, Test Strategy And Review Engine | Done | US-064, US-065 | Definition of Done verwys na herhaalbare quality-, test- en reviewhekke sonder dokumentasie-as-bewys |
 | MCP-US-067 | Prompt Compiler, Context Loader And Knowledge Base Structure | Done | US-065, US-066 | Agente laai minimale bronkonteks, behou instruksieprioriteit en lewer naspeurbare story-pakkette; geen runtime-LLM-afhanklikheid nie |
 
+## MCP-EPIC-010 Physical Chip And Display Expansion
+
+Hierdie epic is doelbewus **ná MVP**. Dit verander nie die huidige hoorbare volgorde `US-014 -> US-016 -> US-063` nie en maak geen elektriese aanspraak voordat die betrokke fisiese chip en breakout gemeet is nie.
+
+| ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
+|---|---|---|---|---|
+| MCP-US-069 | External I2C Status Display Adapter | Later | US-004, US-022 | Capability-gated SSD1306/soortgelyke adapter toon beperkte status en debugdata koersbegrens; afwesige display verander nie synthgedrag nie |
+| MCP-US-070 | Physical Chip Transport And Capability Abstraction | Later | US-004, US-034 | Klasgebaseerde transportpoorte dek direkte GPIO, I2C-expander en SPI sonder chip-/penkonstantes; ontdekking is veilig, geïnjekteer en toetsbaar |
+| MCP-US-071 | Physical SN76489 Hardware Adapter | Later | US-017, US-070 | Bevestigde chip-identiteit, vlakke, klok en bussekwensies stuur note na die fisiese chip; mislukking val terug na emulasie |
+| MCP-US-072 | Physical SID6581 Feasibility And Adapter | Later | US-038, US-070 | Chip Engineer keur voeding, vlakke, klok, registerbus en analooguitvoer goed voor implementering; ondersteunde pad faal veilig terug na emulasie |
+| MCP-US-073 | ArduinoOPL2 SPI Hardware Adapter | Later | US-041, US-070 | Die DhrBaksteen-bord se SPI-kontrak word teen sy bron en werklike HIL gevalideer sonder om emulatorlogika aan die buslaag te bind |
+| MCP-US-074 | Emulated Or Physical Core Backend Selection And Fallback | Later | US-034, US-070, een fisiese chipadapter | Config/web kies per kern `emulated` of `physical`; emulasie is altyd verstek en fallback, en fisiese modus render nie ’n tweede plaaslike kopie nie |
+
 ## Definition of Ready
 
 - Gebruikerwaarde, afhanklikhede en nie-doelwitte is duidelik.
@@ -148,6 +161,7 @@ Hierdie epic beheer hoe mense en agente projekkennis laai, besluite neem en bewy
 - Die ontwerp wys watter klas elke stuk runtime-status besit en hoe afhanklikhede ingespuit word.
 - Die plan bevat 'n rooi AST-/importtoets wanneer nuwe Python-modules geskep word.
 - Elke virtuele spanrol het 'n bydrae of gemotiveerde `Not impacted`-inskrywing.
+- Hostopdragte gebruik 'n bevestigde Python 3.11+ virtual environment; `/usr/bin/python` en kaal onbevestigde `python` is nie projekgereedskap nie.
 - Product Owner het die ongeveer 50-woord uitvoerplan aanvaar.
 
 ## Definition of Done

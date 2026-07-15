@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.8.0
+Versienommer: 0.9.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-068 Stable USB MIDI Instance Identity
-Actienr: MCP-ACT-068-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
+User-Story: MCP-US-069 tot MCP-US-074 Physical Chip And Display Expansion
+Actienr: MCP-ACT-PHYSICAL-001-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -43,6 +43,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 | R-028 | Programmatiese harde reset laat USB-toestel soms sonder CIRCUITPY/CDC-herenumerasie | Medium | Hoog | Embedded/QA | Fisiese power-cycle het volume/REPL herstel; recovery-runbook en finale manifest-HIL is bewys | Beheer aktief |
 | R-029 | CIRCUITPY-media word geldig maar leesalleen aan die host aangebied | Medium | Hoog | Embedded/Release | Stop deploy; verifieer FAT nie-destruktief; fisiese power-cycle en skryfbaarheidstoets; geen formattering of concurrent-write-omseiling nie | Beheers - skryfbare HIL op 2026-07-15 |
 | R-030 | USB-produkname bots of verander tussen boots | Medium | Hoog | Embedded/Release | Stabiele nie-geheime vier-karakter instance-ID, gedokumenteerde collision fallback en twee-toestel DAW-aanvaarding in MCP-US-068 | Backlog - MCP-US-068 |
+| R-031 | Verkeerde voeding, vlakke, klok of bussekwensie beskadig 'n skaars fisiese retrochip | Medium | Kritiek | DSP/Chip/Hardware | Datasheet- en meethek voor bedrading; current-limited bench supply; level shifting; geen universele expander-aanname | Later - MCP-US-070 tot US-073 |
+| R-032 | Fisiese backend word vals opgespoor, hang die runtime of speel saam met emulasie | Medium | Hoog | Architect/Embedded/QA | Capability probe, timeout, fault injection, veilige oorskakelgrens en emulasie as verstek/fallback | Later - MCP-US-074 |
 
 ## Hoogste onmiddellike aksies
 

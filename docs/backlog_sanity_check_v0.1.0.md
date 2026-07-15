@@ -2,23 +2,23 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.8.0
+Versienommer: 0.9.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-007, MCP-US-064 tot MCP-US-068
-Actienr: MCP-ACT-FWK-001-SANITY-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
+User-Story: MCP-US-005, MCP-US-023, MCP-US-069 tot MCP-US-074
+Actienr: MCP-ACT-005-IMP-001-SANITY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 -->
 
 ## Resultaat
 
-Status: **PASS ná MCP-US-007-HIL-aanvaarding en Framework Engineering-amendment**.
+Status: **PASS ná MCP-US-007-HIL-aanvaarding, US-005-herstel en post-MVP fisiese-uitbreidingsamendment**.
 
 | Kontrole | Resultaat |
 |---|---|
-| Epic-ID's | 9 unieke epics, MCP-EPIC-001 tot MCP-EPIC-009 |
-| Story-ID's | 68 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-068 |
+| Epic-ID's | 10 unieke epics, MCP-EPIC-001 tot MCP-EPIC-010 |
+| Story-ID's | 74 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-074 |
 | Duplikate story-ID's | Geen |
 | Verlore nommers | Geen |
 | Storytitel | Elke story het 'n titel |
@@ -60,6 +60,9 @@ Status: **PASS ná MCP-US-007-HIL-aanvaarding en Framework Engineering-amendment
 | Host-, drieledige device-proof, HIL- en kruisbordtoetse | MCP-US-050 tot US-053 |
 | Beginnerdiagnose en MVP-release | MCP-US-056, US-057 |
 | Stabiele, onderskeibare USB-MIDI instance-name | MCP-US-068 |
+| Eksterne I2C-statusdisplay sonder runtime-afhanklikheid | MCP-US-069 |
+| Fisiese SN76489, SID6581 en OPL2 via vervangbare transports | MCP-US-070 tot US-073 |
+| Emulasie/fisiese backendkeuse met emulasie-fallback | MCP-US-074 |
 | Framework-, solution- en enterprise-argitektuur | MCP-US-064, US-065 |
 | Kwaliteit-, toets- en reviewgovernance | MCP-US-066 |
 | Agentkonteks en kennisstruktuur | MCP-US-067 |
@@ -81,6 +84,10 @@ Status: **PASS ná MCP-US-007-HIL-aanvaarding en Framework Engineering-amendment
 - Geen nuwe story-ID was vir die deployherstel nodig nie; dit sluit MCP-US-051 se HIL-kontrak en MCP-US-007 se fisiese uitvoerbaarheidshek.
 - MCP-US-064 tot US-067 formaliseer Framework Engineering sonder om firmware-WIP of produkvolgorde te verander.
 - MCP-US-068 is 'n lae-prioriteit MVP-Must release-polish story: die vier-karakter suffix is 'n stabiele instance-ID, nie 'n aanspraak op 'n volledige UUID nie.
+- MCP-US-023 besit reeds startupverslag van hostname, netwerkmodus en toepaslike IP; dit bly ná US-005 en US-022 en is nie vorentoe geskuif nie.
+- MCP-US-069 tot US-074 is ná MVP georden. Hulle verander nie die huidige AudioOutput/MAX98357/D1-volgorde nie.
+- MCP-US-070 hou GPIO-, I2C-expander- en SPI-transports agter poorte; die presiese PCF/MCP-komponent en SID-elektriese pad word eers met datasheet- en HIL-bewys gekies.
+- MCP-US-074 maak emulasie die verstek en veilige fallback. Fisiese chipmodus stuur register-/beheerdata en vermy dubbele plaaslike klankrendering.
 
 ## Governance-gap wat nou gesluit is
 

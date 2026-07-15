@@ -2,13 +2,13 @@
 
 <!--
 Bestand: wifi_runtime_fallback_amendment_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Formaliseer station-join, IP-ontdekking, access-point fallback en mobiele webbeheer.
 Sprint: Sprint 1
 Epic: MCP-EPIC-004 Local Web Control
-User-Story: WIFI-RUNTIME-AMENDMENT-001
-Actienr: MCP-ACT-WIFI-AMEND-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
+User-Story: MCP-US-023 Safe Wi-Fi Station And AP Fallback Service
+Actienr: MCP-ACT-023-SCOPE-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 -->
 
 ## Product Owner-besluite
@@ -19,12 +19,13 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 4. Die webinterface is mobile-first, werk in station- en AP-modus en bly binne die MVP se eenkliënt-/geheuebegroting.
 5. Normale polling, note, klok en UI-verversings skryf nie elke keer ’n logreël nie. Logging is vlak-, gebeurtenis- en koersbegrens; geheime word nooit gelog nie.
 6. Netwerkstatus behoort aan klasinstansies. Wi-Fi begin slegs in `code.py`-runtime ná capability/config checks en nooit in `boot.py` of tydens import nie.
+7. Startup toon een geredigeerde status met hostname, modus (`station`, `ap-fallback` of `degraded-offline`) en die toepaslike IP-adres; geen SSID, wagwoord, MAC of rou toestel-ID word gedruk nie.
 
 ## Logiese story-toewysing
 
 | Story | Aanscherping |
 |---|---|
-| MCP-US-023 | Station join, timeout, station-IP, beveiligde AP-fallback, AP-IP en eksplisiete netwerktoestande |
+| MCP-US-023 | Station join, timeout, startup-hostname, station-IP, beveiligde AP-fallback, AP-IP en eksplisiete netwerktoestande |
 | MCP-US-024 | Mobile-first UI, station/AP-pariteit, eenkliëntbegroting en spaarsame koersbegrensde logging |
 | MCP-US-027 | Vertroude-LAN/AP-sekuriteit, private credentials, sessielimiet, afskakeling en herstel |
 
@@ -47,9 +48,9 @@ Elke oorgang lewer hoogstens een gesanitiseerde statusgebeurtenis. ’n Herhaald
 
 | Profiel | Minimum bewys |
 |---|---|
-| Station sukses | Privaat config word gelees; join slaag binne timeout; IP verskyn een keer; mobiele browser laai statusblad |
+| Station sukses | Privaat config word gelees; join slaag binne timeout; hostname, `station` en IP verskyn een keer; mobiele browser laai statusblad |
 | Station misluk | Onbereikbare toets-SSID of afgeskakelde router bereik timeout sonder hang; AP-fallback begin |
-| Access point | Telefoon join die beveiligde AP; AP-IP is sigbaar; dieselfde mobiele blad en veilige parameters werk |
+| Access point | Telefoon join die beveiligde AP; hostname, `ap-fallback` en AP-IP is sigbaar; dieselfde mobiele blad en veilige parameters werk |
 | Logging | Geen per-poll-/per-note-logvloed; statusveranderings verskyn; wagwoorde, SSID-geheime en kliënt-MAC’s verskyn nooit |
 | Herstel | Web/verbinding kan stop of misluk sonder om USB-MIDI, REPL of volgende reboot te breek |
 

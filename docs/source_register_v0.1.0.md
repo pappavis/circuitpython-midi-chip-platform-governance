@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.9.1
+Versienommer: 0.10.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-007 USB MIDI Receive Loop
-Actienr: MCP-ACT-007-IMP-003-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-003
+User-Story: MCP-US-070 tot MCP-US-073 Physical Chip Expansion
+Actienr: MCP-ACT-PHYSICAL-001-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 -->
 
 ## Primêre tegniese bronne
@@ -46,6 +46,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-003
 | [Fishman TriplePlay Utility User Guide](https://a11.fishman.com/wp-content/uploads/2024/12/TriplePlayUtility-UserGuide.pdf) | Trigger/Auto/Smooth/Step bend- en slide-semantiek | Amptelike handleiding; synth bend range moet konfigureerbaar en ooreenstemmend wees |
 | [DOREMiDi UMH-10](https://www.doremidi.cn/h-pd-2.html) | Voorbeeld van klas-kompatibele USB-MIDI-host na 5-pen DIN | Verwysingstoestel; presiese model/controller-kombinasie vereis eie HIL |
 | [RaspiMIDIHub](https://raspimidihub.com/) | Raspberry Pi USB-MIDI ontdekking en roetering sonder DAW | Eksterne projek; integrasie word as transport-HIL getoets, nie as firmware-afhanklikheid nie |
+| [DhrBaksteen ArduinoOPL2 source](https://github.com/DhrBaksteen/ArduinoOPL2/tree/master/src) | Kandidaatbron vir die latere ArduinoOPL2 SPI-adapter in MCP-US-073 | Gebruiker-aangewese bron; Chip Engineer doen lisensie-, register- en HIL-review eers wanneer US-073 aktief is |
+| [Malvineous pyopl](https://github.com/Malvineous/pyopl) | Kandidaatgedragsverwysing vir latere OPL2-emulasie/vergelyking | Gebruiker-aangewese bron; geen kodehergebruik of lisensie-aanname voor US-041-review nie |
 
 ## Plaaslike en projekbronne
 

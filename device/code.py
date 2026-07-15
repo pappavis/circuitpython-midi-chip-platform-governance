@@ -1,11 +1,11 @@
 # Bestand: code.py
-# Versienommer: 0.12.2
-# Doel: Rapporteer toestelgereedheid en bied veilige opt-in USB-MIDI Note On/Off-diagnostiek.
+# Versienommer: 0.12.3
+# Doel: Rapporteer toestelgereedheid met die herstelde private konfigurasiegrens.
 # Sprint: Sprint 2
-# Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-005-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-005
+# Epic: MCP-EPIC-001 Platform Foundation
+# User-Story: MCP-US-005 Configuration And Secret Boundary
+# Actienr: MCP-ACT-005-IMP-001-DEVICE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication

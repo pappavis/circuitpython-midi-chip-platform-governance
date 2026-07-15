@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
-Actienr: MCP-ACT-003-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-IMP-001-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 -->
 
 ## Harde argitektuurreels
@@ -101,6 +101,13 @@ Copilot kan as eksterne argitektuurreviewer inset lewer. Dié inset is adviseren
 - Backlog, dokumentasie en Kanban word saam bygewerk.
 - Lessons learned word na elke groep van drie of vier voltooide stories bygewerk, en ook by elke epic-/releasegrens of ernstige impedimentgroep.
 - Geen commit/push indien geheime, private rugsteune, plaaslike toestel-ID's of onbevestigde release-aansprake teenwoordig is nie.
+
+## Python-interpretergrens
+
+1. `/usr/bin/python`, Python 2.7 en 'n onbevestigde kaal `python` word nooit vir projektoetse, builds, deploys of hulpmiddels gebruik nie.
+2. Codex-ontwikkelopdragte op KodeklopperM4 gebruik eksplisiet `/Volumes/data1/michiele/venv/venv3.12/bin/python`; `~/venv/venv` is 'n toegelate alternatief nadat sy Python 3.11+-weergawe bevestig is.
+3. Eindgebruikers skep en aktiveer hul eie projeklokale `.venv`; dokumentasie verifieer daarna `sys.executable` en Python-weergawe voordat `python -m ...` gebruik word.
+4. Geen absolute virtualenv-pad word in runtimekode, publieke config of kruisplatform-startup vasgeskryf nie.
 
 ## Opsionele plaaslike LLM-beleid
 

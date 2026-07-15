@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.12.0
-# Doel: Laai publieke verstekke, private settings en veilige opt-in MIDI-diagnostiek.
+# Versienommer: 0.12.3
+# Doel: Laai publieke verstekke en normaliseer leë private settings veilig.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-005 Configuration And Secret Boundary
+# Actienr: MCP-ACT-005-IMP-001-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -60,7 +60,10 @@ class EnvironmentSettingsSource:
         environment_key = self._environment_keys.get(str(key))
         if environment_key is None:
             return None
-        return self._getter(environment_key)
+        value = self._getter(environment_key)
+        if isinstance(value, str) and not value.strip():
+            return None
+        return value
 
     def keys(self):
         return tuple(self._environment_keys)

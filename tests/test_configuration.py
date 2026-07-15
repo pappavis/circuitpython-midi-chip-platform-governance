@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.12.0
-# Doel: Spesifiseer publieke verstekke, private settings en opt-in MIDI-diagnostiek.
+# Versienommer: 0.12.3
+# Doel: Spesifiseer publieke verstekke, private settings en leewaarde-normalisering.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-002-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-005 Configuration And Secret Boundary
+# Actienr: MCP-ACT-005-IMP-001-RED-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -78,6 +78,36 @@ class TestConfigurationSecretBoundary:
         assert private_password not in report
         assert "CONFIG_PRIVATE_WIFI_SSID=SET" in report
         assert "CONFIG_PRIVATE_WIFI_PASSWORD=SET" in report
+
+    def test_empty_private_settings_are_treated_as_unset(self) -> None:
+        snapshot = ConfigurationLoader(
+            defaults=ConfigurationDefaults(),
+            settings_source=EnvironmentSettingsSource(
+                lambda key: "" if key in ("WIFI_SSID", "WIFI_PASSWORD") else None
+            ),
+        ).load()
+
+        report = "\n".join(snapshot.report_lines())
+
+        assert snapshot.get("wifi.ssid") is None
+        assert snapshot.get("wifi.password") is None
+        assert snapshot.source_for("wifi.ssid") is None
+        assert "CONFIG_PRIVATE_WIFI_SSID=UNSET" in report
+        assert "CONFIG_PRIVATE_WIFI_PASSWORD=UNSET" in report
+
+    def test_whitespace_private_settings_are_treated_as_unset(self) -> None:
+        snapshot = ConfigurationLoader(
+            defaults=ConfigurationDefaults(),
+            settings_source=EnvironmentSettingsSource(
+                lambda key: "  \t " if key == "WEB_AP_PASSWORD" else None
+            ),
+        ).load()
+
+        report = "\n".join(snapshot.report_lines())
+
+        assert snapshot.get("web.ap.password") is None
+        assert snapshot.source_for("web.ap.password") is None
+        assert "CONFIG_PRIVATE_WEB_AP_PASSWORD=UNSET" in report
 
     def test_runtime_override_has_highest_priority(self) -> None:
         snapshot = ConfigurationLoader(

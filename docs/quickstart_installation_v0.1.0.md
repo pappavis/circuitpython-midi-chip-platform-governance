@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.9.0
+Versienommer: 0.10.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-007 USB MIDI Receive Loop Acceptance
-Actienr: MCP-ACT-007-ACCEPT-DOC-003
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-IMP-001-DOC-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 -->
 
 ## Wat hierdie weergawe doen
@@ -57,6 +57,14 @@ py -3.11 -m venv .venv
 
 Die prompt behoort nou `(.venv)` te wys. Hierdie omgewing hou projekpakkette weg van jou stelsel-Python.
 
+Bevestig nou dat die aktiewe interpreter werklik uit `.venv` kom en Python 3.11 of nuwer is:
+
+```bash
+python -c "import sys; print(sys.executable); print(sys.version)"
+```
+
+Op Windows PowerShell gebruik jy dieselfde opdrag nadat `.venv` geaktiveer is. Stop indien die pad `/usr/bin/python` toon of die weergawe met `2.7` begin; aktiveer `.venv` weer. 'n Absolute ontwikkelaarspad hoort nooit in projekconfig of startupkode nie.
+
 ## 3. Installeer die projek en toetsgereedskap
 
 ```bash
@@ -74,7 +82,7 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.12.2 | story=MCP-US-007 | release-date=2026-07-15
+circuitpython-midi-chip-platform v0.12.3 | story=MCP-US-005 | release-date=2026-07-16
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
@@ -112,6 +120,7 @@ CircuitPython lees omgewingswaardes uit `settings.toml` in die wortel van `CIRCU
 2. Vervang slegs die plekhouers wat jy benodig.
 3. Moenie jou voltooide `settings.toml` na Git kopieer of commit nie.
 4. Die synth rapporteer slegs of 'n private waarde `SET` of `UNSET` is.
+5. 'n Leë waarde of een wat net uit spasies bestaan, word as `UNSET` behandel; gebruik aanhalingstekens vir doelbewus leë strings, byvoorbeeld `WIFI_SSID = ""`.
 
 Prioriteit: toekomstige runtime-/commandline-overrides wen eerste, daarna `settings.toml`, daarna publieke verstekke. `settings.toml` skei geheime van bronkode maar enkripteer dit nie.
 
