@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.4.0
+# Versienommer: 0.5.0
 # Doel: Spesifiseer geredigeerde connection-, deploy-, boot- en execution-HIL-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
-# Actienr: MCP-ACT-006-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from io import StringIO
 
@@ -20,7 +20,7 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 9
+        assert len(manifest.entries) == 10
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
@@ -37,6 +37,10 @@ class TestHilDeploymentManifest:
         assert (
             "src/midi_chip_platform/events.py",
             "lib/midi_chip_platform/events.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/midi_usb.py",
+            "lib/midi_chip_platform/midi_usb.py",
         ) in manifest.entries
 
 
@@ -63,14 +67,14 @@ class TestHardwareInLoopVerifier:
             device_path.write_bytes(source_relative.encode("ascii"))
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.6.0 | story=MCP-US-006 | "
+            "circuitpython-midi-chip-platform v0.7.0 | story=MCP-US-007 | "
             "release-date=2026-07-15\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.6.0 | story=MCP-US-006 | "
+            "circuitpython-midi-chip-platform v0.7.0 | story=MCP-US-007 | "
             "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
         )
         verifier = HardwareInLoopVerifier(

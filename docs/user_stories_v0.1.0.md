@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.8.0
+Versienommer: 0.9.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
-Actienr: MCP-ACT-006-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
+User-Story: MCP-US-007 USB MIDI Receive Loop
+Actienr: MCP-ACT-007-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 -->
 
 ## Statuslegende
@@ -38,7 +38,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-006 | Portable NoteEvent And ControlEvent Model | In Review | US-002 | Note, CC, 14-bit bend en kanaallose clock het backend-onafhanklike klasse; 49 hosttoetse is groen |
-| MCP-US-007 | USB MIDI Receive Loop | MVP | US-003, US-006 | Enige klas-kompatibele bron kan via 'n rekenaar/DAW of eksterne USB-host Note On/Off stuur sonder toestelnaamkonstante |
+| MCP-US-007 | USB MIDI Receive Loop | In Review | US-003, US-006 | Generiese Adafruit-vertaling en begrensde receive-loop is host-groen; fisiese Note On/Off wag op toesteltoegang |
 | MCP-US-062 | BLE MIDI Transport And Capability Gate | MVP (Must) | US-006, US-007, US-052 | ’n BLE-geskikte bord adverteer en ontvang Note/CC/bend via dieselfde eventmodel; ESP32-S2 rapporteer nie-ondersteun sonder USB-regressie |
 | MCP-US-008 | MIDI Channel Router | MVP | US-007 | Kanaal 1-16 word konfigureerbaar na ’n kerninstansie gerouteer |
 | MCP-US-009 | Velocity And Note-Off Semantics | MVP | US-007 | Velocity nul sluit note; geen hangende stem ná All Notes Off nie |

@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.6.0
+# Versienommer: 0.7.0
 # Doel: Besit en formateer gedeelde host- en toestel-release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
-# Actienr: MCP-ACT-006-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.6.0",
-        user_story="MCP-US-006",
+        version="0.7.0",
+        user_story="MCP-US-007",
         release_date="2026-07-15",
     ):
         self._version = str(version)
