@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.18.0
+Versienommer: 0.19.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
-User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016 Standalone I2S Audible Diagnostic
-Actienr: MCP-ACT-MVP-SCOPE-001-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-016 Standalone I2S Audible Diagnostic
+Actienr: MCP-ACT-QA-BURN-IN-001-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 ## Statuslegende
@@ -59,9 +59,9 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-014 | AudioOutput Port And Null Backend | MVP-Enabler | US-002 | Kernlogika kan sonder fisiese klank host-getoets word |
-| MCP-US-016 | Standalone I2S Audible Diagnostic (MAX98357 Default) | MVP-Must | US-004, US-014 | `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie, speel G3-C4-D4 square waves deur 'n geïnjekteerde PCM-I2S-profiel, valideer MAX98357 IO5/IO3/IO7 fisies en stel I2S vry |
+| MCP-US-016 | Standalone I2S Audible Diagnostic (MAX98357 Default) | MVP-Must | US-004, US-014 | `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie, speel G3-C4-D4 square waves deur 'n geïnjekteerde PCM-I2S-profiel, valideer MAX98357 IO5/IO3/IO7 fisies, stel I2S vry en slaag 'n 30-minute smoke |
 | MCP-US-015 | PWM Diagnostic Fallback | Post-MVP/contingency | US-004, US-014 | Gekose debugpenne lewer 'n meetbare fallback-sein wanneer I2S nie beskikbaar is nie |
-| MCP-US-063 | Portable D1 Baseline Synth Core | MVP-Must | US-006, US-008, US-009, US-014, US-016 | Nuut-geporteerde sine/saw/square D1-gedrag speel Note On/Off via AudioOutput; geen desktop-backend of produksierepo-wysiging nie |
+| MCP-US-063 | Portable D1 Baseline Synth Core | MVP-Must | US-006, US-008, US-009, US-014, US-016 | Nuut-geporteerde sine/saw/square D1-gedrag speel Note On/Off via AudioOutput, ruim op en slaag 'n 30-minute D1 smoke; geen desktop-backend of produksierepo-wysiging nie |
 | MCP-US-017 | SN76489-Lite Three-Voice Core | Post-MVP | US-063, US-057 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |
 | MCP-US-018 | Voice Allocation And Stealing | Post-MVP | US-017 | Vierde noot volg 'n toetsbare steal-policy sonder vasloop |
 | MCP-US-020 | Optional Integrated G-C-D Startup Test | Post-MVP | US-016, US-063 | Opsionele sestiendenootreeks gebruik die D1/runtime-klankpad; dit is nie die onafhanklike US-016 hardewarediagnose nie |
@@ -122,16 +122,16 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-050 | Host Simulator And Contract Tests | MVP-Enabler | US-002, US-006 | Kern/MIDI/klankkontrakte loop op macOS, Windows en Linux sonder bord |
-| MCP-US-051 | Hardware-In-The-Loop Test Runner | MVP-Enabler (In Review) | US-003, US-016 | Autoreload-safe deploy, closure, libraries, boot en import/execution is fisies groen; die MAX98357-klankadapter sluit met US-016 se hoorbare bewys |
+| MCP-US-051 | Hardware-In-The-Loop Test Runner | MVP-Enabler (In Review) | US-003, US-016 | Autoreload-safe deploy, closure, libraries, boot en import/execution is fisies groen; die klankadapter voeg rate-limited heap/reset/dropout-burn-intelemetrie by |
 | MCP-US-052 | Cross-Board Capability Profiles | Post-MVP | US-004 | 'n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via 'n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | Post-MVP | US-003, US-007 | Toestel verskyn en ontvang note op 'n skoon Windows-rekenaar |
-| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must | US-003, US-007, US-009, US-014, US-016, US-063 | Logic kies die bord as External MIDI destination, stuur Note On/Off en die gebruiker hoor die D1-kern deur die verwysings-I2S-pad |
+| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must | US-003, US-007, US-009, US-014, US-016, US-063 | Logic kies die bord as External MIDI destination en die gebruiker hoor D1; die verwysingsbord slaag daarna die 8-uur USB-MIDI/audio/heap-burn-in |
 | MCP-US-056 | Install Recovery And Diagnostics | Post-MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
 | MCP-US-068 | Stable USB MIDI Instance Identity | Post-MVP | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | Post-MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |
 | MCP-US-060 | Standalone External MIDI Host Acceptance | Post-MVP | US-013, US-017 | Controller na Raspberry Pi/eksterne USB-host na DIN/UART lewer note, bend en clock sonder DAW |
-| MCP-US-057 | MVP Release Candidate And Demo | MVP-Must | US-001 tot US-009, US-014, US-016, US-050, US-051, US-055, US-063 | Tag, release notes en bekende beperkings vergesel 'n herhaalbare Logic USB-MIDI na hoorbare D1-demo |
+| MCP-US-057 | MVP Release Candidate And Demo | MVP-Must | US-001 tot US-009, US-014, US-016, US-050, US-051, US-055, US-063 | Tag, release notes, bekende beperkings en 'n geslaagde 8-uur burn-inverslag vergesel die herhaalbare Logic USB-MIDI na hoorbare D1-demo |
 
 ## MCP-EPIC-009 Framework Engineering
 
@@ -169,6 +169,7 @@ Hierdie epic is doelbewus **ná MVP**. Dit verander nie die huidige hoorbare vol
 - Elke virtuele spanrol het 'n bydrae of gemotiveerde `Not impacted`-inskrywing.
 - Hostopdragte gebruik 'n bevestigde Python 3.11+ virtual environment; `/usr/bin/python` en kaal onbevestigde `python` is nie projekgereedskap nie.
 - Product Owner het die ongeveer 50-woord uitvoerplan aanvaar.
+- Die story verklaar `Burn-in: Required` met profiel of `Burn-in: N/A` met 'n gemotiveerde rede.
 
 ## Definition of Done
 
@@ -184,4 +185,5 @@ Hierdie epic is doelbewus **ná MVP**. Dit verander nie die huidige hoorbare vol
 - Die span het bepaal of hierdie closure 'n drie-/vier-story lessons-learned-checkpoint aktiveer en dit, indien verskuldig, voltooi.
 - Geen geheime, plaaslike konstantes of onbedoelde binêre lêers is gestage nie.
 - Commit en push is voltooi; demo- teenoor produksestatus is eerlik.
+- Vereiste burn-in en heap-lek-aanvaarding is geslaag en aan die story review gekoppel.
 - MVP-aanvaarding word slegs teen die bevrore Acceptance Set beoordeel; 'n historiese `Must`-etiket of voltooide ekstra funksie verbreed dit nie.

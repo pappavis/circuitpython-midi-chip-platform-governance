@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.10.0
+Versienommer: 0.11.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016
-Actienr: MCP-ACT-MVP-SCOPE-001-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-016
+Actienr: MCP-ACT-QA-BURN-IN-001-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -46,6 +46,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 | R-031 | Verkeerde voeding, vlakke, klok of bussekwensie beskadig 'n skaars fisiese retrochip | Medium | Kritiek | DSP/Chip/Hardware | Datasheet- en meethek voor bedrading; current-limited bench supply; level shifting; geen universele expander-aanname | Later - MCP-US-070 tot US-073 |
 | R-032 | Fisiese backend word vals opgespoor, hang die runtime of speel saam met emulasie | Medium | Hoog | Architect/Embedded/QA | Capability probe, timeout, fault injection, veilige oorskakelgrens en emulasie as verstek/fallback | Later - MCP-US-074 |
 | R-033 | Die onafhanklike I2S-toets dryf weg van produksie se AudioOutput-profiel | Medium | Hoog | Architect/QA/HIL | Behou dieselfde profielveldname; AST/import- en frekwensietoetse; gepaarde MAX98357-HIL; geen gedeelde synth-runtime-import nie | Beheer in MCP-US-016 |
+| R-034 | Langdurige heap-lek, hulpbronlek of seldsame reset word nie deur kort HIL gevind nie | Medium | Hoog | QA/HIL/Embedded | 30m/8h/12h/24h burn-inprofiele; 4096-byte/5%-heapgrens; cleanup-, reset- en dropouttelemetrie | Beheer in US-016/051/055/057 |
 
 ## Hoogste onmiddellike aksies
 

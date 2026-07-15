@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.7.0
+Versienommer: 0.8.0
 Doel: Definieer die verkleinde eerste toetsbare CircuitPython MIDI Chip Platform MVP.
 Sprint: Sprint 2
 Epic: MCP-EPIC-001, MCP-EPIC-002, MCP-EPIC-003 en MCP-EPIC-008
-User-Story: MVP-SCOPE-REDUCTION-001
-Actienr: MCP-ACT-MVP-SCOPE-001-SCOPE-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001
+Actienr: MCP-ACT-QA-BURN-IN-001-SCOPE-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 ## Langtermyn-produkdefinisie
@@ -29,6 +29,7 @@ Die MVP is geslaag wanneer een herhaalbare vertikale vloei op die verwysingsbord
 4. Die draagbare D1-basiskern speel sine, saw en square via die geverifieerde AudioOutput-pad.
 5. Logic Pro kan die D1-kern as 'n bruikbare External MIDI synth speel en hoor.
 6. Hosttoetse, HIL-bewys, herstelstappe, dokumentasie en release metadata is op datum.
+7. Die geïntegreerde D1/USB-MIDI/I2S-pad voltooi 'n 8-uur burn-in binne die meetbare heap- en stabiliteitsgrense.
 
 ## Bevrore MVP Acceptance Set
 
@@ -80,6 +81,7 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 - D1 sine, saw en square is hoorbaar; Note Off stop die stem sonder hangende noot.
 - Die klanktoets en D1-pad gebruik dieselfde gedokumenteerde pen-/profielwaardes sonder runtime-koppeling.
 - Alle MVP Acceptance Set-stories is Done en die PO aanvaar die hoorbare Logic-demo.
+- Die 8-uur MVP burn-in het geen reset, hang, permanente stilte of onverklaarde USB-ontkoppeling nie; heap bly binne die grens in `burn_in_heap_stability_spec_v0.1.0.md`.
 - Geen geheime, rou toestelidentifiseerders of plaaslike hardeware-name is in die openbare repository nie.
 
 ## Geordende pad

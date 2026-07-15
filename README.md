@@ -47,6 +47,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Hergebruiksmatriks](docs/reuse_matrix_v0.1.0.md)
 - [Span en RACI](docs/team_raci_v0.1.0.md)
 - [Risiko-register](docs/risk_register_v0.1.0.md)
+- [Burn-In en heap-stabiliteitspesifikasie](docs/burn_in_heap_stability_spec_v0.1.0.md)
 - [Bronregister](docs/source_register_v0.1.0.md)
 - [Excel Kanban-backlog](outputs/CHATOD-20260714-MCP-CP-MVP-001/circuitpython_midi_chip_platform_mvp_kanban_v0.1.0.xlsx)
 - [Agile delivery- en releaseplan](docs/agile_delivery_release_plan_v0.1.0.md)

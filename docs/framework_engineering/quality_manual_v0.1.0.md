@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quality_manual_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Definieer kwaliteitseienaarskap, verpligte hekke en objektiewe vrystellingsbewys.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: MVP-SCOPE-REDUCTION-001
-Actienr: MCP-ACT-MVP-SCOPE-001-QUAL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001
+Actienr: MCP-ACT-QA-BURN-IN-001-QUAL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 ## Kwaliteitsbeleid
@@ -27,6 +27,7 @@ Kwaliteit beteken dat die produk se beweerde gedrag herhaalbaar, herstelbaar, ve
 | Deploy | Dependency closure en atomiese/autoreload-safe kopie | Onvolledige manifest of onbekende destructive aksie |
 | HIL | Connection, deployment, execution, stimulus | Fisiese claim sonder toestelbewys |
 | Human acceptance | PO se hoorbare/Logic/meet-instrument resultaat | Kriterium vereis menslike waarneming en dit ontbreek |
+| Burn-in/heap | Storyklassifikasie plus toepaslike 30m/8h/12h/24h verslag | Vereiste duur, heap-grens, cleanup of telemetrie ontbreek |
 | Traceability | Header, story review, backlog, Kanban, commit | Statusse/weergawe/ChatID verskil |
 | Release | Bevrore MVP Acceptance Set, risiko, docs, rollback, tag | Oop acceptance-set story of onbevestigde Logic/D1/klankclaim |
 
@@ -49,7 +50,7 @@ Artefakte bevat metadata, eienaar/gesag, huidige status en direkte skakels. Doku
 
 ## Metrieke
 
-Die span volg: groen toetsgetal, oop impediments, story cycle time, regressies, dependency-closure, HIL pass rate, heap, audio latency/dropout, hersteltyd en statusversoeningsfoute. Metrieke verduidelik risiko; hulle vervang nie aanvaarding nie.
+Die span volg: groen toetsgetal, oop impediments, story cycle time, regressies, dependency-closure, HIL pass rate, heap, audio latency/dropout, hersteltyd en statusversoeningsfoute. Heap word teen die meetbare 4096-byte/5%-grens en uurlikse trend in die Burn-In-spesifikasie beoordeel. Metrieke verduidelik risiko; hulle vervang nie aanvaarding nie.
 
 ## Afwykings
 

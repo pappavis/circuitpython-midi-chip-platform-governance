@@ -2,13 +2,13 @@
 
 <!--
 Bestand: test_strategy_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Definieer die toetsvlakke, omgewings, hardewarematriks en aanvaardingsbewys.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016
-Actienr: MCP-ACT-MVP-SCOPE-001-TEST-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-016
+Actienr: MCP-ACT-QA-BURN-IN-001-TEST-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 ## Toetspiramide
@@ -24,6 +24,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 | Standalone audio HIL | S2 + I2S backend + meetmiddel | G-C-D, penne, profiel, cleanup sonder synth | `device/i2s_test.py` -> MAX98357 |
 | D1 audio HIL | S2 + D1 + backend | Waveform, Note On/Off, latency, dropout | Logic -> D1 -> MAX98357 |
 | End-to-end | Logic Pro-opstelling | MVP-gebruikersvloei en herstel | Logic -> reference board -> speaker |
+| Burn-in | S2 + MIDI/audio HIL | Langdurige stabiliteit, heaptrend en cleanup | 30m/8h/12h/24h profiel |
 
 ## Omgewingsmatriks
 
@@ -61,6 +62,10 @@ Voor luidsprekertoets word MAX98357 se BTL-uitgang en voeding bevestig. US-016 s
 - Timeout, Ctrl-C, soft reload en power-cycle herstel.
 - Corrupte/ontbrekende config en capabilities faal veilig.
 - Security: secret scan, AP-auth, request rate, geen private logs.
+
+## Burn-in en heap-lek
+
+`docs/burn_in_heap_stability_spec_v0.1.0.md` is normatief. Die D1-MVP vereis 'n ononderbroke 8-uur run, geen reset/hang/MemoryError nie, en finale vrye heap ná GC binne die grootste van 4096 bytes of 5% van die post-warm-up baseline. Elke toepaslike story verklaar sy profiel reeds in Definition of Ready.
 
 ## Exit-kriteria
 

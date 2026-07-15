@@ -2,7 +2,7 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.7.0
+Versienommer: 0.8.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
@@ -58,6 +58,7 @@ Toetse self word ook in toetsklasse georganiseer. 'n Uitsondering op hierdie ree
 9. Die bindende oorblywende pad is `US-005 -> US-014 -> US-016 -> US-063 -> US-055 -> US-057`.
 10. US-016 se `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie en besit I2S eksklusief terwyl dit loop.
 11. SN76489 en elke volgende kern begin eers nadat die D1/Logic MVP aanvaar is.
+12. Elke langlopende runtime-story verklaar `Burn-in: Required` of gemotiveerd `Burn-in: N/A`; die duur en heap-grense volg `docs/burn_in_heap_stability_spec_v0.1.0.md`.
 
 ## Produksie-repositorygrens
 
@@ -104,6 +105,7 @@ Copilot kan as eksterne argitektuurreviewer inset lewer. Dié inset is adviseren
 - Headers bevat bestand, weergawe, doel, sprint, epic, story, aksie en ChatID.
 - Backlog, dokumentasie en Kanban word saam bygewerk.
 - Lessons learned word na elke groep van drie of vier voltooide stories bygewerk, en ook by elke epic-/releasegrens of ernstige impedimentgroep.
+- 'n Toepaslike story kan nie Done word sonder sy burn-in/heap-verslag nie; dokumentasie- en suiwer hostkontrakstories mag dit gemotiveerd `N/A` merk.
 - Geen commit/push indien geheime, private rugsteune, plaaslike toestel-ID's of onbevestigde release-aansprake teenwoordig is nie.
 
 ## Python-interpretergrens

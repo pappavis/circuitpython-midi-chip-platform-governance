@@ -2,13 +2,13 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.10.0
+Versienommer: 0.11.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MVP-SCOPE-REDUCTION-001
-Actienr: MCP-ACT-MVP-SCOPE-001-SANITY-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001
+Actienr: MCP-ACT-QA-BURN-IN-001-SANITY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 ## Resultaat
@@ -41,6 +41,7 @@ Status: **PASS vir 74 stories, 10 epics en die bevrore 16-story MVP Acceptance S
 | Interne 120 BPM en eksterne MIDI clock | MCP-US-011, US-012 |
 | Onafhanklike G-C-D I2S-diagnose, MAX98357 as verstek | MCP-US-014, US-016, US-051 |
 | Draagbare, hoorbare D1-basiskern in Logic | MCP-US-063, US-055 |
+| Burn-in, heap-stabiliteit en langlopende releasebewys | MCP-US-016, US-051, US-055, US-057, US-063 |
 | PWM fallback en stereo-besluit ná MVP | MCP-US-015, US-021 |
 | SN76489 drie stemme tweede | MCP-US-017, US-018 |
 | Per-stem links/regs/stereo | MCP-US-019 |
@@ -93,6 +94,7 @@ Status: **PASS vir 74 stories, 10 epics en die bevrore 16-story MVP Acceptance S
 - MCP-US-069 tot US-074 is ná MVP georden. Hulle verander nie die huidige AudioOutput/MAX98357/D1-volgorde nie.
 - MCP-US-070 hou GPIO-, I2C-expander- en SPI-transports agter poorte; die presiese PCF/MCP-komponent en SID-elektriese pad word eers met datasheet- en HIL-bewys gekies.
 - MCP-US-074 maak emulasie die verstek en veilige fallback. Fisiese chipmodus stuur register-/beheerdata en vermy dubbele plaaslike klankrendering.
+- Burn-in en heap-stabiliteit is 'n kruisliggende kwaliteitskontrak, nie 'n nuwe funksionele story nie. Elke toepaslike langlopende story merk dit as `Required` of motiveer `N/A` volgens `burn_in_heap_stability_spec_v0.1.0.md`.
 
 ## Governance-gap wat nou gesluit is
 

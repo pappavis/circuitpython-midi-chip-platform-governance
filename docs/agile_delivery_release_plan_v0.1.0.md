@@ -2,13 +2,13 @@
 
 <!--
 Bestand: agile_delivery_release_plan_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Definieer die werklike Agile uitvoerings-, beheer- en releaseproses.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MVP-SCOPE-REDUCTION-001
-Actienr: MCP-ACT-MVP-SCOPE-001-REL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: QA-BURN-IN-AMENDMENT-001
+Actienr: MCP-ACT-QA-BURN-IN-001-REL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 -->
 
 ## Doel
@@ -53,8 +53,9 @@ Die Framework Engineering-bootloader in `docs/framework_engineering/README.md` v
 4. **Green phase:** Die kleinste klasgebaseerde implementering maak die toets groen.
 5. **Regression:** Volle relevante suite, importveiligheid en geheimekontrole slaag.
 6. **HIL/review:** QA bewys eers verbinding, deploy en toesteluitvoering; PO voer daarna die gepaste MIDI-/klank-/Logic-/ossilloskooptoets uit.
-7. **Closure:** docs, Kanban, rolbydraes, commit en push word voltooi.
-8. **Next proposal:** net die volgende logiese story word voorgestel.
+7. **Stability:** 'n toepaslike langlopende story voltooi sy gemerkte burn-in-profiel en heap-kriteria, of motiveer `N/A`.
+8. **Closure:** docs, Kanban, rolbydraes, commit en push word voltooi.
+9. **Next proposal:** net die volgende logiese story word voorgestel.
 
 Voor refinement laai die span die minimale konteks volgens die Context Loader Specification. Voor closure klassifiseer die Review Engine oop bevindinge en pas die Quality Manual plus Test Strategy toe.
 
@@ -90,9 +91,9 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 |---|---|---|
 | Concept | Ontwerp of spike | Geen gebruikersclaim |
 | Demo | Beperkte gelukkige pad | Herhaalbare demo en bekende beperkings |
-| MVP Candidate | Die bevrore Acceptance Set is geimplementeer | Standalone I2S-preflight plus host/HIL groen |
+| MVP Candidate | Die bevrore Acceptance Set is geimplementeer | Standalone I2S-preflight, host/HIL groen en 8-uur D1 burn-in slaag |
 | MVP Accepted | PO hoor en aanvaar Logic USB-MIDI na D1 op die verwysingsbord | Review, retro, bekende risiko's en release notes |
-| Validated | Tweede omgewing/bord slaag | Kruisplatform- en herstelbewys |
+| Validated | Tweede omgewing/bord slaag | Kruisplatform-, herstel- en 24-uur burn-in-bewys |
 | Production Candidate | Verspreidings- en veiligheidshekke slaag | Lisensie, USB-ID, hardwareveiligheid, rollback |
 
 ## Releasehekke
@@ -108,6 +109,10 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 9. Fisiese claims bevat Device Connection Proof met ontdekte transport, broncommit/manifest en 'n runtimebanner vanaf die toestel. UID, MAC, SSID en geheime word geredigeer.
 10. MVP-status word slegs teen die eksplisiete Acceptance Set beoordeel; historiese prioriteitslabels verbreed nie scope nie.
 11. Die standalone I2S-diagnose het geen synth-import, globale runtime-status of gelyktydige I2S-eienaarskap nie.
+12. Toepaslike langlopende stories het 'n burn-in-klassifikasie. Die MVP benodig 'n 8-uur verslag; 'n Release Candidate 12 uur en `Validated` 24 uur.
+13. Ná warmloop en eksplisiete garbage collection mag vrye heap nie met meer as die grootste van 4096 grepe of 5% van die baseline versleg nie; drie agtereenvolgende dalende uurlikse kontrolepunte van meer as 1024 grepe faal.
+
+Die normatiewe stimulus, meetkadens, stopvoorwaardes en verslagformaat staan in `docs/burn_in_heap_stability_spec_v0.1.0.md`.
 
 ## Device Connection Proof
 
