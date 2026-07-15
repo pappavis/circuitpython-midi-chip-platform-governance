@@ -13,9 +13,9 @@ I2S_DATA = "IO7"
 
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
-MIDI_DIAGNOSTIC_ENABLED = false
+# CircuitPython 10.0.x os.getenv settings support strings and integers.
+MIDI_DIAGNOSTIC_ENABLED = "false"
 MIDI_DIAGNOSTIC_MAX_EVENTS = 8
 MIDI_DIAGNOSTIC_TIMEOUT_SECONDS = 60
-# CircuitPython environment settings require fractional values as strings.
 MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = "0.01"
 MIDI_INPUT_PORT_INDEX = 0

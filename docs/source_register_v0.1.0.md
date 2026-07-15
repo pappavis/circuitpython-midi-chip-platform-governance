@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.9.0
+Versienommer: 0.9.1
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-Actienr: MCP-ACT-051-IMP-001-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+User-Story: MCP-US-007 USB MIDI Receive Loop
+Actienr: MCP-ACT-007-IMP-003-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-003
 -->
 
 ## Primêre tegniese bronne
@@ -38,6 +38,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
 | [HTTP server starting methods](https://docs.circuitpython.org/projects/httpserver/en/latest/starting_methods.html) | Handmatige station- en AP-bedieneropstart | Primêre biblioteekvoorbeeld; produksiekode gebruik dependency injection en debug af |
 | [CircuitPython `settings.toml`](https://learn.adafruit.com/networking-in-circuitpython/network-settings) | Moderne private netwerkconfig | Geen geheime in Git nie |
 | [CircuitPython environment variables](https://docs.circuitpython.org/en/latest/docs/environment.html) | `settings.toml` in die CIRCUITPY-wortel en `os.getenv()`-toegang | Primêre amptelike docs; skeiding is nie enkripsie nie en waardes word per toegang geparseer |
+| [CircuitPython 10.0.x environment variables](https://docs.circuitpython.org/en/10.0.x/docs/environment.html) | Firmware-gepinde settings-subset vir die 10.0.3-verwysingstoestel | Primêre amptelike docs; strings en heelgetalle is die ondersteunde subset, dus word booleans/floats vir `os.getenv()` as strings gestoor en intern omgeskakel |
 | [CircuitPython storage workflow](https://docs.circuitpython.org/en/10.1.1/docs/workflows.html) | Verstek host-writable/CircuitPython-read-only massa-opberging | Primêre amptelike docs; afwykende leesalleen-hostmedia vereis beheerde herstel |
 | [CircuitPython `storage`](https://docs.circuitpython.org/en/10.0.3/shared-bindings/storage/) | Remount-, USB-drive- en vernietigende erase-grense | Primêre amptelike API; geen erase/remount sonder eksplisiete herstelbesluit nie |
 | [Raspberry Pi OS documentation](https://www.raspberrypi.com/documentation/computers/os.html) | Skeiding van Linux/Python-teikens van mikrobeheerderfirmware | Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie |

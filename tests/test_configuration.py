@@ -31,11 +31,12 @@ class TestConfigurationDefaults:
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
 
-    def test_device_settings_example_quotes_fractional_values_for_circuitpython(self) -> None:
+    def test_device_settings_example_quotes_non_integer_values_for_circuitpython_10(self) -> None:
         settings_example = (
             Path(__file__).parents[1] / "device" / "settings.toml.example"
         ).read_text(encoding="utf-8")
 
+        assert 'MIDI_DIAGNOSTIC_ENABLED = "false"' in settings_example
         assert 'MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = "0.01"' in settings_example
 
 

@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_007_usb_midi_receive_review_v0.1.0.md
-Versienommer: 0.3.1
+Versienommer: 0.3.2
 Doel: Dokumenteer die USB-MIDI ontvangsadapter, fisiese deploy en menslike Note On/Off-hek.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock
@@ -40,17 +40,19 @@ Geen private serial-identifiseerder, volume-inhoud of `settings.toml`-waarde is 
 
 ## Impediment MCP-US-007-IMPEDIMENT-002
 
-Die eerste menslike her-toets het voor die receive-loop gestop met 'n CircuitPython `ValueError` oor ongeldige heelgetalsintaksis. Die oorsaak was `MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = 0.01`: die toestel se environment-parser het die on-gekwoteerde breukwaarde as 'n heelgetal probeer interpreteer.
+Die eerste menslike her-toets het voor die receive-loop gestop met 'n CircuitPython `ValueError` oor ongeldige heelgetalsintaksis. Die eerste oorsaak was `MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = 0.01`: die toestel se environment-parser het die on-gekwoteerde breukwaarde as 'n heelgetal probeer interpreteer. Nadat die float gequote is, het die on-gekwoteerde boolean dieselfde firmwaregrens met grondtal 10 blootgelê.
+
+Die amptelike CircuitPython 10.0.x-dokumentasie vir die projek se 10.0.3-toestel beskryf strings en heelgetalle as die ondersteunde settings-subset. Nuwer `latest`-dokumentasie beskryf ook floats en booleans. Die projek pin daarom die teikenweergawe se kontrak in plaas daarvan om latest-gedrag terugwaarts aan te neem.
 
 Die herstel:
 
-- voeg 'n RED-regressietoets by wat 'n CircuitPython-versoenbare stringwaarde afdwing;
-- verander die voorbeeld en tydelike toestelkonfigurasie na `"0.01"`;
+- voeg 'n RED-regressietoets by wat CircuitPython 10.0.x-versoenbare stringwaardes afdwing;
+- verander die voorbeeld en tydelike toestelkonfigurasie na `"true"`/`"false"` en `"0.01"`;
 - laat `ConfigurationLoader` die string na die interne float omskakel;
 - raak geen private of verkeerd benoemde bestaande settingslêer aan nie;
 - herlaai die Wemos met 'n tien-minuut, begrensde diagnostiekvenster.
 
-Ná die herstel slaag **87 hosttoetse** en Ruff. Die herbruikbare les word by die volgende lessons-learned-kontrolepunt ingesluit vir toekomstige subtractive-, D1-, drum-machine- en FM-synthprojekte: toets ingebedde konfigurasieparsers op die werklike firmware, nie net met desktop-TOML nie.
+Ná die herstel slaag **87 hosttoetse** en Ruff. Die herbruikbare les word by die volgende lessons-learned-kontrolepunt ingesluit vir toekomstige subtractive-, D1-, drum-machine- en FM-synthprojekte: toets ingebedde konfigurasieparsers op die werklike firmware, nie net met desktop-TOML of die jongste dokumentasie nie.
 
 ## Status
 
