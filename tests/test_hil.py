@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.12.1
+# Versienommer: 0.12.2
 # Doel: Spesifiseer dependency-closed deploy-, execution- en USB-MIDI-HIL-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-004-GREEN-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-004
+# Actienr: MCP-ACT-007-IMP-005-RED-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-005
 
 from io import StringIO
 from pathlib import Path
@@ -18,6 +18,7 @@ from midi_chip_platform.hil import (
     HilDeploymentManifest,
     SerialHardResetProbe,
     SerialExecutionProbe,
+    SerialAutoreloadSession,
 )
 
 
@@ -249,6 +250,46 @@ class TestHardwareInLoopDeployer:
         assert session.calls == ["disable", "enable", "close"]
 
 
+class TestSerialAutoreloadSession:
+    class FakeConnection:
+        def __init__(self):
+            self.writes = []
+            self._reads = [b"HIL_AUTORELOAD_STATUS=DISABLED\n"]
+
+        def write(self, payload):
+            self.writes.append(payload)
+
+        def flush(self):
+            return None
+
+        def reset_input_buffer(self):
+            return None
+
+        def read(self, _size):
+            if not self._reads:
+                return b""
+            return self._reads.pop(0)
+
+        def close(self):
+            return None
+
+    class NoWaitSleeper:
+        def sleep(self, _seconds):
+            return None
+
+    def test_disable_enters_normal_repl_before_setting_autoreload(self) -> None:
+        connection = self.FakeConnection()
+        session = SerialAutoreloadSession(
+            connection=connection,
+            sleeper=self.NoWaitSleeper(),
+        )
+
+        session.disable()
+
+        assert connection.writes[:3] == [b"\r\n", b"\x02", b"\x03\r\n"]
+        assert b"supervisor.runtime.autoreload = False" in connection.writes[3]
+
+
 class TestHardwareInLoopVerifier:
     class FakeSerialProbe:
         def __init__(self, capture):
@@ -273,14 +314,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
+            "circuitpython-midi-chip-platform v0.12.2 | story=MCP-US-007 | "
             "release-date=2026-07-15\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
+            "circuitpython-midi-chip-platform v0.12.2 | story=MCP-US-007 | "
             "release-date=2026-07-15\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -338,7 +379,7 @@ class TestHardwareInLoopVerifier:
         (device_root / "boot.py").write_bytes(b"approved")
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
-            "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
+            "circuitpython-midi-chip-platform v0.12.2 | story=MCP-US-007 | "
             "release-date=2026-07-15\nBOOT_STATUS=PASS",
             encoding="utf-8",
         )
@@ -348,7 +389,7 @@ class TestHardwareInLoopVerifier:
             serial_port="redacted",
             manifest=manifest,
             serial_probe=self.FakeSerialProbe(
-                "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
+                "circuitpython-midi-chip-platform v0.12.2 | story=MCP-US-007 | "
                 "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),

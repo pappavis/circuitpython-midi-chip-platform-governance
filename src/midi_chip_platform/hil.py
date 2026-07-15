@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.11.1
-# Doel: Verifieer dependency-closed CircuitPython connection-, deploy-, import- en execution-bewys.
+# Versienommer: 0.12.2
+# Doel: Verifieer dependency-closed deploy met robuuste CircuitPython REPL/autoreload-handdruk.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-# Actienr: MCP-ACT-051-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-IMP-005-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-005
 
 import ast
 import hashlib
@@ -237,10 +237,13 @@ class HardwareInLoopDeployer:
         session = None
         copied = False
         recovered = True
+        failure_reason = "autoreload-open"
         try:
             if self._serial_port is not None:
                 session = self._autoreload_controller.open(self._serial_port)
+                failure_reason = "autoreload-disable"
                 session.disable()
+            failure_reason = "copy"
             for source_relative, device_relative in self._manifest.entries:
                 source_path = self._source_root / source_relative
                 device_path = self._device_root / device_relative
@@ -260,7 +263,7 @@ class HardwareInLoopDeployer:
                 finally:
                     session.close()
         if not copied:
-            self._write("HIL_DEPLOY_STATUS=FAIL;reason=io-or-autoreload\n")
+            self._write(f"HIL_DEPLOY_STATUS=FAIL;reason={failure_reason}\n")
             return False
         if not recovered:
             self._write("HIL_DEPLOY_STATUS=FAIL;reason=autoreload-recovery\n")
@@ -323,7 +326,13 @@ class SerialAutoreloadSession:
         self._read_attempts = int(read_attempts)
 
     def disable(self):
-        self._connection.write(b"\x03\x03\r\n")
+        self._connection.write(b"\r\n")
+        self._connection.flush()
+        self._sleeper.sleep(0.2)
+        self._connection.write(b"\x02")
+        self._connection.flush()
+        self._sleeper.sleep(0.2)
+        self._connection.write(b"\x03\r\n")
         self._connection.flush()
         self._sleeper.sleep(0.5)
         self._connection.reset_input_buffer()

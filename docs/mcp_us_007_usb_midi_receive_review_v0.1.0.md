@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_007_usb_midi_receive_review_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Dokumenteer die USB-MIDI ontvangsadapter, fisiese deploy en menslike Note On/Off-hek.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock
@@ -61,6 +61,12 @@ Die fisiese runtime het daarna in `CircuitPythonUsbMidiFactory.create_input()` g
 Die herstel vervang slegs die twee dinamiese importaanroepe met die standaard posisionele `globals`, `locals` en `fromlist`-argumente. 'n Nuwe positional-only fake importer reproduseer eers RED en bewys daarna GREEN. Die volledige suite bevat nou **88 groen hosttoetse** en Ruff is groen.
 
 Die daaropvolgende toestel-deploy is veilig geweier terwyl die lang diagnostieklus en daarna Thonny die USB-serialpoort besit het. Die runbook-vereiste is daarom: stel diagnostiek af, sluit alle REPL/serial-monitors, deploy en verifieer, aktiveer diagnostiek weer en open presies een monitor. Die deployer se weiering word as 'n geslaagde veiligheidshek behandel, nie as rede om atomiese deploy te omseil nie.
+
+## Impediment MCP-US-007-IMPEDIMENT-005
+
+Nadat Thonny gesluit en serial-eienaarskap skoon bewys is, het die deployer steeds die autoreload-marker gemis. 'n Geredigeerde fisiese probe het bewys dat die bord vanuit die “code done”-toestand die volgorde `Enter`, `Ctrl-B`, `Ctrl-C` benodig voordat REPL-opdragte betroubaar aanvaar word. Die deployer het voorheen slegs `Ctrl-C` gestuur.
+
+'n RED-toets spesifiseer nou die volledige normale-REPL-handdruk. Die GREEN-implementasie gebruik dieselfde fisies bewese volgorde, behou atomiese tydelike lêers en rapporteer voortaan die veilige mislukte fase (`autoreload-open`, `autoreload-disable` of `copy`) sonder uitsonderingstekste of identifiseerders. Hierdie serial-toestandmasjienles gaan ook na die volgende lessons-learned-kontrolepunt.
 
 ## Repository-identiteitsimpediment
 
