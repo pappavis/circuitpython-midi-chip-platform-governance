@@ -2,7 +2,7 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.19.0
+Versienommer: 0.20.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
@@ -37,7 +37,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-002 | Clean Repository And Project Skeleton | MVP-Enabler (Done) | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | MVP-Enabler (Done) | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
 | MCP-US-004 | Board Capability Discovery | MVP-Enabler (Done) | US-002 | Profiel, IO3/5/7, modules, geheue en I2S-backend is fisies gerapporteer; power-cycle recovery en volledige manifest-HIL slaag |
-| MCP-US-005 | Configuration And Secret Boundary | MVP-Enabler (In Review) | US-003 | Hostlek- en leewaarde-toetse is groen; fisiese herbewys moet leë/whitespace private settings as `UNSET` rapporteer en ingevulde waardes slegs as `SET` |
+| MCP-US-005 | Configuration And Secret Boundary | Done | US-003 | Hostlektoetse plus Wemos v0.12.3 bewys `PASS`, drie leë private velde as `UNSET` en device execution as `READY` sonder waardelek |
 
 ## MCP-EPIC-002 MIDI And Clock
 

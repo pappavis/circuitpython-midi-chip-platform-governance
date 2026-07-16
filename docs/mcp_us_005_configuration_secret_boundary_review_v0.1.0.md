@@ -2,18 +2,18 @@
 
 <!--
 Bestand: mcp_us_005_configuration_secret_boundary_review_v0.1.0.md
-Versienommer: 0.3.1
-Doel: Dokumenteer die private settings-grens, leewaarde-herstel en finale HIL-hek.
+Versienommer: 0.4.0
+Doel: Dokumenteer die aanvaarde private settings-grens en fisiese leewaarde-herstel.
 Sprint: Sprint 1
 Epic: MCP-EPIC-001 Platform Foundation
 User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-IMP-001-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+Actienr: MCP-ACT-005-ACCEPT-001-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-HIL-ACCEPTED
 -->
 
 ## Status
 
-**IN REVIEW / MENSLIKE KONFIGURASIEHEK.** Geheime-redaksie en host-regressie is groen. v0.12.3 is fisies gedeploy en connection, manifest, libraries, boot en execution slaag. Die toestel rapporteer drie private, werklik nie-leë waardes veilig as `SET`; die `UNSET`-tak bly die enigste oop sluitingshek.
+**DONE / MENSLIK EN FISIES AANVAAR.** Geheime-redaksie en host-regressie is groen. v0.12.3 is fisies gedeploy en connection, manifest, libraries, boot en execution slaag. Die Product Owner het op 2026-07-16 bevestig dat drie leë private waardes as `UNSET` gerapporteer word terwyl configuration en device execution `PASS/READY` bly.
 
 ## Konfigurasieprioriteit
 
@@ -43,13 +43,16 @@ Die huidige publieke klankprofiel is mono MAX98357A met IO5 BCLK, IO3 WS/LRC en 
 - RED 2026-07-16: twee nuwe regressietoetse het gewys dat leë en whitespace-private waardes foutief in die snapshot beland.
 - GREEN 2026-07-16: die settings source normaliseer daardie waardes na `None`; 33 geteikende config/CLI/HIL-toetse en die volle stel van 91 hosttoetse slaag op v0.12.3.
 - DEVICE 2026-07-16: v0.12.3 se geredigeerde HIL-verslag toon connection, manifest-closure, deployment, libraries, boot en execution as PASS. 'n Waardevrye vormkontrole het bevestig dat al drie private reëls werklik nie-leë waardes bevat; die runtime se drie `SET`-statusse is dus korrek. Geen waarde, SSID, wagwoord, UID of MAC word as aanvaardingsbewys gepubliseer nie.
+- HUMAN HIL 2026-07-16: die Wemos S2 rapporteer `CONFIGURATION_STATUS=PASS`, al drie private velde as `UNSET`, `DEVICE_IMPORT_STATUS=PASS` en `DEVICE_EXECUTION_STATUS=READY`. Geen private waarde is ontvang of gestoor nie.
 
-## Menslike aanvaardingshek
+## Menslike herhaaltoets
 
 1. Maak Thonny en enige serial monitor toe.
 2. Laat die drie private waardes leeg of verwyder hul reëls; hard-reset en verwag drie keer `UNSET`.
 3. Stel slegs veilige dummy-toetswaardes; hard-reset en verwag die betrokke velde as `SET`, nooit die waardes nie.
 4. Verwyder die dummywaardes of maak hulle weer leeg; hard-reset en verwag weer `UNSET`.
+
+Hierdie prosedure is nou 'n regressie-/hersteltoets en nie meer 'n oop storyhek nie.
 
 ## Virtuele spanreview
 

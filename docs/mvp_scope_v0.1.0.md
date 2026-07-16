@@ -86,13 +86,13 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 
 ## Geordende pad
 
-`MCP-US-005 -> MCP-US-014 -> MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
+`MCP-US-014 -> MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
 
-Die aktiewe MCP-US-005 UNSET-HIL word eers afgesluit. Geen D1- of I2S-implementering spring hierdie WIP-hek oor nie.
+MCP-US-005 se UNSET-HIL is aanvaar. MCP-US-014 is die aktiewe volgende story; geen D1- of I2S-implementering spring hierdie WIP-hek oor nie.
 
 ## Besluithekke
 
-1. **Configuration-hek:** MCP-US-005 se SET/UNSET-bewys sluit voor nuwe funksionele werk.
+1. **Configuration-hek:** MCP-US-005 se SET/UNSET-bewys is fisies gesluit.
 2. **Diagnose-hek:** die onafhanklike G-C-D-toets moet hoorbaar wees voordat D1 begin.
 3. **D1-hek:** SN76489 en elke volgende kern begin eers ná die aanvaarbare D1/Logic MVP.
 4. **Profiel-hek:** 'n nuwe I2S-module kry eers 'n profiel en fisiese HIL voordat dokumentasie dit as gevalideer beskryf.

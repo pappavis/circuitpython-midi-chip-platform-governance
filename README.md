@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr. Die eerste klein MVP bewys slegs **Logic USB
 
 ## Projekstatus
 
-Die projek is by **Sprint 2**, runtime **v0.12.3**. MCP-US-007 is fisies aanvaar: Logic/CoreMIDI het USB-MIDI gestuur en die Wemos S2 het Note On, Note Off en 'n ooreenstemmende nootpaar as PASS gerapporteer. MCP-US-005 se leë-private-setting-herstel is host-groen en wag op die finale Wemos-herbewys. Daarna volg AudioOutput, 'n onafhanklike G-C-D I2S-toets, die D1-kern en die hoorbare Logic-aanvaarding.
+Die projek is by **Sprint 2**, runtime **v0.12.3**. MCP-US-005 en MCP-US-007 is fisies aanvaar: private leë settings rapporteer veilig `UNSET`, en Logic/CoreMIDI se USB-MIDI Note On/Off bereik die Wemos S2. MCP-US-014 AudioOutput is nou die aktiewe volgende story; daarna volg die onafhanklike G-C-D I2S-toets, D1-kern en hoorbare Logic-aanvaarding.
 
 ## Begin hier
 
